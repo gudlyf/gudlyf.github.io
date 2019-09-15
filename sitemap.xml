@@ -3,26 +3,26 @@
   xmlns:xhtml="http://www.w3.org/1999/xhtml">
   
   <url>
-    <loc>https://rawdatum.com/posts/first-piece/</loc>
+    <loc>/posts/first-piece/</loc>
     <lastmod>2019-09-15T14:03:44-04:00</lastmod>
   </url>
   
   <url>
-    <loc>https://rawdatum.com/posts/</loc>
+    <loc>/posts/</loc>
     <lastmod>2019-09-15T14:03:44-04:00</lastmod>
   </url>
   
   <url>
-    <loc>https://rawdatum.com/</loc>
+    <loc>/</loc>
     <lastmod>2019-09-15T14:03:44-04:00</lastmod>
   </url>
   
   <url>
-    <loc>https://rawdatum.com/categories/</loc>
+    <loc>/categories/</loc>
   </url>
   
   <url>
-    <loc>https://rawdatum.com/tags/</loc>
+    <loc>/tags/</loc>
   </url>
   
 </urlset>
