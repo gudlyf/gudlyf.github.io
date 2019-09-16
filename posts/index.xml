@@ -2,21 +2,21 @@
 <rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
   <channel>
     <title>Posts on Raw Datum</title>
-    <link>/posts/</link>
+    <link>https://rawdatum.com/posts/</link>
     <description>Recent content in Posts on Raw Datum</description>
     <generator>Hugo -- gohugo.io</generator>
     <language>en-us</language>
     <lastBuildDate>Sun, 15 Sep 2019 14:03:44 -0400</lastBuildDate>
     
-	<atom:link href="/posts/index.xml" rel="self" type="application/rss+xml" />
+	<atom:link href="https://rawdatum.com/posts/index.xml" rel="self" type="application/rss+xml" />
     
     
     <item>
       <title>First Piece</title>
-      <link>/posts/first-piece/</link>
+      <link>https://rawdatum.com/posts/first-piece/</link>
       <pubDate>Sun, 15 Sep 2019 14:03:44 -0400</pubDate>
       
-      <guid>/posts/first-piece/</guid>
+      <guid>https://rawdatum.com/posts/first-piece/</guid>
       <description>Passion is an interesting concept. Everyone has a different thing or person or act that defines passion for them. In the end, though, it pretty much means the same thing: it’s what drives you. Personally. Emotionally. Maybe financially, if you’re that sort. It’s what excites you, maybe gives you a sense of purpose, or a goal to work toward. Wakes you up. Gets your attention. But does it define you?</description>
     </item>
     
