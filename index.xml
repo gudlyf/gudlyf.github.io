@@ -6,10 +6,20 @@
     <description>Recent content on Raw Datum</description>
     <generator>Hugo -- gohugo.io</generator>
     <language>en-us</language>
-    <lastBuildDate>Sun, 15 Sep 2019 14:03:44 -0400</lastBuildDate>
+    <lastBuildDate>Thu, 19 Sep 2019 09:25:05 -0400</lastBuildDate>
     
 	<atom:link href="https://rawdatum.com/index.xml" rel="self" type="application/rss+xml" />
     
+    
+    <item>
+      <title>2nd Piece: Misunderstandings and Misfortunes of AWS ELBs</title>
+      <link>https://rawdatum.com/posts/2nd-piece/</link>
+      <pubDate>Thu, 19 Sep 2019 09:25:05 -0400</pubDate>
+      
+      <guid>https://rawdatum.com/posts/2nd-piece/</guid>
+      <description>Well, this is embarrassing.
+I&amp;rsquo;ve been working with AWS for many years now, but I will likely never claim that I know everything about any particular service and, most especially, every service offering that&amp;rsquo;s available. The velocity of change their and, really, with any modern cloud provider is crazy, and keeping up with it can be tough. But, that doesn&amp;rsquo;t excuse my not fully understanding the basic features of a fundamental piece of infrastructure there.</description>
+    </item>
     
     <item>
       <title>First Piece</title>
