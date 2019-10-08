@@ -30,5 +30,14 @@ I&amp;rsquo;ve been working with AWS for many years now, but I will likely never
       <description>Passion is an interesting concept. Everyone has a different thing or person or act that defines passion for them. In the end, though, it pretty much means the same thing: it&amp;rsquo;s what drives you. Personally. Emotionally. Maybe financially, if you&amp;rsquo;re that sort. It&amp;rsquo;s what excites you, maybe gives you a sense of purpose, or a goal to work toward. Wakes you up. Gets your attention. But does it define you?</description>
     </item>
     
+    <item>
+      <title>3rd Piece: The Cloud-Agnostic Argument</title>
+      <link>https://rawdatum.com/posts/3rd-piece/</link>
+      <pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
+      
+      <guid>https://rawdatum.com/posts/3rd-piece/</guid>
+      <description>If you&amp;rsquo;ve already been running your production environment in the cloud for, say, the past five-plus years or so, you&amp;rsquo;re probably feeling pretty happy right where you are &amp;ndash; or, at least, pretty comfortable. And let&amp;rsquo;s say you&amp;rsquo;ve migrated your non-cloud app and its infrastructure over to this cloud provider, as-is: simple VMs, maybe a load balancer. Then, over the years, you&amp;rsquo;ve matured this environment to take advantage of what this cloud provider has to offer: object storage, caching, auto-scaling, managed databases.</description>
+    </item>
+    
   </channel>
 </rss>

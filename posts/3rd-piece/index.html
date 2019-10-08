@@ -1,0 +1,159 @@
+<!DOCTYPE html>
+<html class="no-js" lang="en-us">
+<head>
+	<meta charset="UTF-8">
+	<meta http-equiv="X-UA-Compatible" content="IE=edge">
+	<meta name="viewport" content="width=device-width, initial-scale=1">
+	<meta name="theme-color" content="#1b1b1b">
+	<title>3rd Piece: The Cloud-Agnostic Argument | Raw Datum</title>
+	<script>(function(d,e){d[e]=d[e].replace("no-js","js");})(document.documentElement,"className");</script>
+	<meta name="description" content="">
+		<meta property="og:title" content="3rd Piece: The Cloud-Agnostic Argument" />
+<meta property="og:description" content="If you&rsquo;ve already been running your production environment in the cloud for, say, the past five-plus years or so, you&rsquo;re probably feeling pretty happy right where you are &ndash; or, at least, pretty comfortable. And let&rsquo;s say you&rsquo;ve migrated your non-cloud app and its infrastructure over to this cloud provider, as-is: simple VMs, maybe a load balancer. Then, over the years, you&rsquo;ve matured this environment to take advantage of what this cloud provider has to offer: object storage, caching, auto-scaling, managed databases." />
+<meta property="og:type" content="article" />
+<meta property="og:url" content="https://rawdatum.com/posts/3rd-piece/" />
+
+
+		<meta name="twitter:card" content="summary"/>
+<meta name="twitter:title" content="3rd Piece: The Cloud-Agnostic Argument"/>
+<meta name="twitter:description" content="If you&rsquo;ve already been running your production environment in the cloud for, say, the past five-plus years or so, you&rsquo;re probably feeling pretty happy right where you are &ndash; or, at least, pretty comfortable. And let&rsquo;s say you&rsquo;ve migrated your non-cloud app and its infrastructure over to this cloud provider, as-is: simple VMs, maybe a load balancer. Then, over the years, you&rsquo;ve matured this environment to take advantage of what this cloud provider has to offer: object storage, caching, auto-scaling, managed databases."/>
+
+	<link rel="stylesheet" href="/css/main.css">
+	<link rel="stylesheet" href="/css/custom.css">
+	<link rel="stylesheet" href="/css/themes/dark-green.css">
+	<link rel="icon" href="/icons/16.png" sizes="16x16" type="image/png">
+	<link rel="icon" href="/icons/32.png" sizes="32x32" type="image/png">
+	<link rel="manifest" href="/manifest.json">
+		
+<script type="application/javascript">
+var doNotTrack = false;
+if (!doNotTrack) {
+	window.ga=window.ga||function(){(ga.q=ga.q||[]).push(arguments)};ga.l=+new Date;
+	ga('create', 'UA-2060500-12', 'auto');
+	
+	ga('send', 'pageview');
+}
+</script>
+<script async src='https://www.google-analytics.com/analytics.js'></script>
+
+</head>
+<body>
+	<header class="header">
+	<a class="logo" href="/">Raw Datum</a>
+	
+</header>
+	<div class="primary">
+	
+	<main class="main">
+		<div class="single block">
+			<article class="post">
+	<div class="post__meta meta mb">
+	</div>
+
+				<h1 class="post__title">3rd Piece: The Cloud-Agnostic Argument</h1>
+				<div class="post__content"><p>If you&rsquo;ve already been running your production environment in the cloud for, say, the past five-plus years or so, you&rsquo;re probably feeling pretty happy right where you are &ndash; or, at least, pretty comfortable. And let&rsquo;s say you&rsquo;ve migrated your non-cloud app and its infrastructure over to this cloud provider, as-is: simple VMs, maybe a load balancer. Then, over the years, you&rsquo;ve matured this environment to take advantage of what this cloud provider has to offer: object storage, caching, auto-scaling, managed databases. Then functions. Then some other new managed service no one else seems to be able to replicate as well. Your production is all humming away beautifully, with fewer things to manage, and all under one roof (provider-wise, that is).</p>
+
+<p>Now, you&rsquo;d better be comfortable with your cloud provider, because you&rsquo;re pretty well stuck.</p>
+
+<p>But that doesn&rsquo;t have to be the case.</p>
+
+<p>There are several schools of thought when it comes to vendor lock-in, but really, in my view, there are two: embrace it with wild abandon, or figure out how not to.</p>
+
+<p>I get the draw of the former case. It&rsquo;s got to be quite the freeing feeling to not have to think of the &ldquo;what if&rsquo;s&rdquo; that come with an undying embrace of tooling and infrastructure. Who gives a shit if GCP has X feature or Azure has Y &ndash; we&rsquo;re in AWS, and we have Z, and we &ldquo;always will.&rdquo; Stop wasting time worrying and preparing for a hypothetical doomsday and get to work.</p>
+
+<p>Then there is the latter: the doomsayers. There is no lock-in. There is no barrel to be held over. No ring to rule them all. That&rsquo;s my camp.</p>
+
+<p>I get the argument against cloud agnosticity (if that&rsquo;s a word). Obviously there&rsquo;s the cost that comes with stack portability, not only in having some form of it run within different providers, but the man-hours it takes to make it happen. There is also, of course, the unfortunate effect of not being able to leverage features &ndash; usually fully-managed ones &ndash; that another provider simply doesn&rsquo;t offer.</p>
+
+<p>But isn&rsquo;t that all a bit akin to the days of sticking with a certain operating system or chip architecture because it&rsquo;s too costly to consider anything else? Or, to a less-likely degree, ignoring disaster recovery options because what you&rsquo;ve got running now is perfect and your MSP is a never-dying vampire, so you&rsquo;re safe until the end of days?</p>
+
+<p>Well, vampires can die, and they can also decide to kill you when they&rsquo;re sick of sucking your blood.</p>
+
+<p>Let me tell you something about your cloud provider, and I know this first-hand: They can decide to kick you off their platform anytime they feel it&rsquo;s remotely warranted, and the burden of proof is on you. Imagine being told you&rsquo;re suspected of sending spam through one of your instances and therefore need to pack your bags for an impromptu, permanent holiday that shall commence in sixty days? You claim you&rsquo;re innocent and have proof, but that&rsquo;s not good enough for them. So, you have sixty days to leave, and you take your baggage to a new port, only they look at your baggage and don&rsquo;t know what the hell to do with most of it. And neither does the next one. You&rsquo;re fucked &ndash; you need ALL NEW BAGGAGE!</p>
+
+<p>I spoke with someone recently about this very topic, someone who works for a much larger organization than I do right now, and who has fully embraced AWS and nothing else. I brought up what seems a hypothetical situation (but is not), and his viewpoint was that it&rsquo;s simply too expensive to consider the alternatives when what you have is working for you just fine. So, he&rsquo;s obviously on the &ldquo;embrace with wild abandon&rdquo; camp, but he&rsquo;s right: it is expensive. So is standing up N+1 servers, load balancers, databases, etc.</p>
+
+<p>But he did have another very good point that gave me some perspective in that &ldquo;uhm duh, you&rsquo;re right&rdquo; way: At what point do you stop going silly about redundancies? We&rsquo;re on one planet, so do we launch this shit onto a satellite? The moon? Mars? Probably not, unless the fate of all humanity rested on your precious app running.</p>
+
+<p>While I still like the idea of seriously considering the idea of not having vendor lock-in, I need to understand that unless there&rsquo;s a reasonable risk the vendor is either A) going to go away suddenly, B) going to decide to jack up prices 150%, or C) find something we might do is bad enough to kick us out, the idea of stack portability might be way, way lower on the priority list.</p>
+
+<p>I&rsquo;ll probably still continue to beat my vendor-UNlock drum for quite some time, though.</p>
+</div>
+				
+				<footer class="post__footer">
+					
+					
+<div class="post__share share">
+	<a class="share__link btn" title="Share on Facebook" href="https://www.facebook.com/sharer/sharer.php?u=https%3a%2f%2frawdatum.com%2fposts%2f3rd-piece%2f" target="_blank" rel="noopener noreferrer" onclick="window.open(this.href, 'Share on Facebook', 'width=800,height=600,toolbar=0,status=0'); return false">
+		<svg class="share__icon" aria-label="Facebook" role="img" width="32" height="32" viewBox="0 0 512 512"><path d="M330 512V322h64l9-74h-73v-47c0-22 6-36 37-36h39V99c-7-1-30-3-57-3-57 0-95 34-95 98v54h-64v74h64v190z"/></svg>
+	</a>
+	<a class="share__link btn" title="Share on Twitter" href="https://twitter.com/intent/tweet/?url=https%3a%2f%2frawdatum.com%2fposts%2f3rd-piece%2f&amp;text=3rd%20Piece%3a%20The%20Cloud-Agnostic%20Argument" target="_blank" rel="noopener noreferrer" onclick="window.open(this.href, 'Share on Twitter', 'width=800,height=450,resizable=yes,toolbar=0,status=0'); return false">
+		<svg class="share__icon" aria-label="Twitter" role="img" width="32" height="32" viewBox="0 0 512 512"><path d="M437 152a72 72 0 0 1-40 12 72 72 0 0 0 32-40 72 72 0 0 1-45 17 72 72 0 0 0-122 65 200 200 0 0 1-145-74 72 72 0 0 0 22 94 72 72 0 0 1-32-7 72 72 0 0 0 56 69 72 72 0 0 1-32 1 72 72 0 0 0 67 50 200 200 0 0 1-105 29 200 200 0 0 0 309-179 200 200 0 0 0 35-37"/></svg>
+	</a>
+	<a class="share__link btn" title="Share on Reddit" href="https://www.reddit.com/submit?url=https%3a%2f%2frawdatum.com%2fposts%2f3rd-piece%2f&amp;title=3rd%20Piece%3a%20The%20Cloud-Agnostic%20Argument" target="_blank" rel="noopener noreferrer" onclick="window.open(this.href, 'Share on Reddit', 'width=832,height=624,toolbar=0,status=0'); return false">
+		<svg class="share__icon" aria-label="Reddit" role="img" width="32" height="32" viewBox="0 0 512 512"><path fill-rule="evenodd" d="M375 146a32 32 0 1 0-29-46l-65-13c-5-1-9 2-10 6l-22 97c-45 1-85 15-113 36a42 42 0 1 0-45 69l-1 12c0 65 74 117 166 117s166-52 166-117l-1-11a42 42 0 1 0-44-69c-28-21-67-35-111-37l19-86 58 13a32 32 0 0 0 32 29zM190 353c2-1 4 0 5 1 15 11 38 18 61 18s46-6 61-18a7 7 0 0 1 8 10c-18 14-44 21-69 21-25-1-51-7-69-21a6 6 0 0 1 3-11zm23-44a31 31 0 1 1-44-44 31 31 0 0 1 44 44zm130 0a31 31 0 1 0-44-44 31 31 0 0 0 44 44z"/></svg>
+	</a>
+	<a class="share__link btn" title="Share on Telegram" href="https://t.me/share/url?url=https%3a%2f%2frawdatum.com%2fposts%2f3rd-piece%2f&amp;title=3rd%20Piece%3a%20The%20Cloud-Agnostic%20Argument" target="_blank" rel="noopener noreferrer" onclick="window.open(this.href, 'Share on Telegram', 'width=800,height=600,toolbar=0,status=0'); return false">
+		<svg class="share__icon" aria-label="Telegram" role="img" width="32" height="32" viewBox="0 0 512 512"><path d="M199 404c-11 0-10-4-13-14l-32-105 245-144"/><path d="M199 404c7 0 11-4 16-8l45-43-56-34"/><path d="M204 319l135 99c14 9 26 4 30-14l55-258c5-22-9-32-24-25L79 245c-21 8-21 21-4 26l83 26 190-121c9-5 17-3 11 4"/></svg>
+	</a>
+	<a class="share__link btn" title="Share on LinkedIn" href="https://www.linkedin.com/shareArticle?mini=true&url=https%3a%2f%2frawdatum.com%2fposts%2f3rd-piece%2f&title=3rd%20Piece%3a%20The%20Cloud-Agnostic%20Argument" target="_blank" rel="noopener noreferrer" onclick="window.open(this.href, 'Share on LinkedIn', 'width=640,height=480,toolbar=0,status=0'); return false">
+		<svg class="share__icon" aria-label="LinkedIn" role="img" width="32" height="32" viewBox="0 0 512 512"><circle cx="142" cy="138" r="37"/><path stroke-width="66" d="M244 194v198M142 194v198"/><path d="M276 282c0-20 13-40 36-40 24 0 33 18 33 45v105h66V279c0-61-32-89-76-89-34 0-51 19-59 32"/></svg>
+	</a>
+	<a class="share__link btn" title="Share on VK" href="https://vk.com/share.php?url=https%3a%2f%2frawdatum.com%2fposts%2f3rd-piece%2f" target="_blank" rel="noopener noreferrer" onclick="window.open(this.href, 'Share on VK', 'width=640,height=480,toolbar=0,status=0'); return false">
+		<svg class="share__icon" aria-label="VK" role="img" width="32" height="32" viewBox="0 0 512 512"><path d="M274 363c5-1 14-3 14-15 0 0-1-30 13-34s32 29 51 42c14 9 25 8 25 8l51-1s26-2 14-23c-1-2-9-15-39-42-31-30-26-25 11-76 23-31 33-50 30-57-4-7-20-6-20-6h-57c-6 0-9 1-12 6 0 0-9 25-21 45-25 43-35 45-40 42-9-5-7-24-7-37 0-45 7-61-13-65-13-2-59-4-73 3-7 4-11 11-8 12 3 0 12 1 17 7 8 13 9 75-2 81-15 11-53-62-62-86-2-6-5-7-12-9H79c-6 0-15 1-11 13 27 56 83 193 184 192z"/></svg>
+	</a>
+	<a class="share__link btn" title="Save to Pocket" href="https://getpocket.com/edit?url=https%3a%2f%2frawdatum.com%2fposts%2f3rd-piece%2f&amp;title=3rd%20Piece%3a%20The%20Cloud-Agnostic%20Argument" target="_blank" rel="noopener noreferrer" onclick="window.open(this.href, 'Save to Pocket', 'width=480,height=320,toolbar=0,status=0'); return false">
+		<svg class="share__icon" aria-label="Pocket" role="img" width="32" height="32" viewBox="0 0 512 512"><path d="M388.8 88.9H123.2A47.4 47.4 0 0 0 76 136.5v131.9c0 2.4.2 4.8.5 7.2a101.8 101.8 0 0 0-.5 10.6c0 75.6 80.6 137 180 137s180-61.4 180-137c0-3.6-.2-7.1-.5-10.6.3-2.4.5-4.8.5-7.2v-132A47.4 47.4 0 0 0 388.8 89zm-22.4 132.6l-93 93c-4.7 4.6-11 7-17.1 7a23.8 23.8 0 0 1-17.7-7l-93-93a24 24 0 0 1 33.8-33.8l76.6 76.5 76.6-76.5a24 24 0 0 1 33.8 33.8z"/></svg>
+	</a>
+</div>
+				</footer>
+				
+			</article>
+		</div>
+	</main>
+	
+<div class="authorbox block">
+	<div class="author">
+		<figure class="author__avatar">
+			<img class="author__img" alt="Keith McDuffee avatar" src="/images/me-profile-pic.jpg" height="90" width="90">
+		</figure>
+		<div class="author__body">
+			<div class="author__name">
+				Keith McDuffee
+			</div>
+			<div class="author__bio">Keith McDuffee is an apologetic, overly-seasoned IT, DevOps and security professional in the New England region of the USA.</div>
+		</div>
+	</div>
+</div>
+	
+
+
+
+	
+
+	</div>
+	<footer class="footer">
+<div class="footer__social social">
+		<a class="social__link" target="_blank" rel="noopener noreferrer" href="mailto:keith@realistek.com">
+			<svg class="social__icon" aria-label="Email" role="img" width="32" height="32" viewBox="0 0 512 512"><path d="M299 268l124 106c-4 4-10 7-17 7H106c-7 0-13-3-17-7l124-106 43 38 43-38zm-43 13L89 138c4-4 10-7 17-7h300c7 0 13 3 17 7L256 281zm54-23l121-105v208L310 258zM81 153l121 105L81 361V153z"/></svg>
+		</a>
+		<a class="social__link" target="_blank" rel="noopener noreferrer" href="https://twitter.com/Gudlyf">
+			<svg class="social__icon" aria-label="Twitter" role="img" width="32" height="32" viewBox="0 0 512 512"><path d="M437 152a72 72 0 0 1-40 12 72 72 0 0 0 32-40 72 72 0 0 1-45 17 72 72 0 0 0-122 65 200 200 0 0 1-145-74 72 72 0 0 0 22 94 72 72 0 0 1-32-7 72 72 0 0 0 56 69 72 72 0 0 1-32 1 72 72 0 0 0 67 50 200 200 0 0 1-105 29 200 200 0 0 0 309-179 200 200 0 0 0 35-37"/></svg>
+		</a>
+		<a class="social__link" target="_blank" rel="noopener noreferrer" href="https://linkedin.com/in/gudlyf">
+			<svg class="social__icon" aria-label="LinkedIn" role="img" width="32" height="32" viewBox="0 0 512 512"><circle cx="142" cy="138" r="37"/><path stroke-width="66" d="M244 194v198M142 194v198"/><path d="M276 282c0-20 13-40 36-40 24 0 33 18 33 45v105h66V279c0-61-32-89-76-89-34 0-51 19-59 32"/></svg>
+		</a>
+		<a class="social__link" target="_blank" rel="noopener noreferrer" href="https://github.com/gudlyf">
+			<svg class="social__icon" aria-label="Github" role="img" width="32" height="32" viewBox="0 0 512 512"><path d="M335 499c14 0 12 17 12 17H165s-2-17 12-17c13 0 16-6 16-12l-1-50c-71 16-86-28-86-28-12-30-28-37-28-37-24-16 1-16 1-16 26 2 40 26 40 26 22 39 59 28 74 22 2-17 9-28 16-35-57-6-116-28-116-126 0-28 10-51 26-69-3-6-11-32 3-67 0 0 21-7 70 26 42-12 86-12 128 0 49-33 70-26 70-26 14 35 6 61 3 67 16 18 26 41 26 69 0 98-60 120-117 126 10 8 18 24 18 48l-1 70c0 6 3 12 16 12z"/></svg>
+		</a>
+		<a class="social__link" target="_blank" rel="noopener noreferrer" href="https://medium.com/@gudlyf">
+			<svg class="social__icon" aria-label="Medium" role="img" width="32" height="32" viewBox="0 0 512 512"><path d="M125 173c0-4-2-9-5-11l-31-38v-6h98l75 166 67-166h93v6l-27 26c-2 1-3 4-3 7v190c0 3 1 6 3 8l27 25v6H289v-6l27-26c3-3 3-4 3-8V193l-76 192h-10l-88-192v129c-1 5 1 11 5 15l35 43v5H85v-5l35-43c4-4 6-10 5-15z"/></svg>
+		</a>
+</div>
+	<div class="footer__copyright">© 2019 Keith McDuffee. <span class="footer__copyright-credits">Powered by <a href="https://gohugo.io/" rel="nofollow noopener" target="_blank">Hugo</a> and <a href="https://github.com/vimux/binario" rel="nofollow noopener" target="_blank">Binario</a> theme.</span></div>
+</footer>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.6/MathJax.js?config=TeX-AMS-MML_HTMLorMML" async></script>
+
+<script src="/js/custom.js"></script>
+</body>
+</html>
