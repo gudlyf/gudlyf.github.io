@@ -13,7 +13,7 @@
 <meta property="og:type" content="website" />
 <meta property="og:url" content="https://rawdatum.com/posts/" />
 
-<meta property="og:updated_time" content="2019-10-07T20:46:45-04:00" />
+<meta property="og:updated_time" content="2019-10-28T22:14:18-04:00" />
 
 		<meta name="twitter:card" content="summary"/>
 <meta name="twitter:title" content="Posts"/>
@@ -52,6 +52,17 @@ if (!doNotTrack) {
 			
 		</div>
 		<div class="cards">
+			
+				<div class="card card--2col">
+					<article class="post card__box block">
+	<h1 class="post__title title-excerpt"><a class="post__title-link" href="/posts/4th-piece/">4th Piece: Preventing Docker logouts with concurrent Jenkins builds</a></h1>
+	<div class="post__content">We were running into an issue with our Docker image builds when running them concurrently on the same Jenkins node. In order to pull or push images from/to the repository, Jenkins first needs to authenticate. By default, Docker will store the credentials for the session in the Jenkins user&rsquo;s $HOME/.docker directory, in the config.json file. But this means any other builds on that node &ndash; or potentially any user with access to the Jenkins $HOME &ndash; can see and use those credentials themselves.</div>
+	<div class="post__meta meta mt tar">
+<time class="post__meta-published meta-published" datetime="2019-10-28T22:14:18">October 28, 2019</time>
+	</div>
+
+</article>
+				</div>
 			
 				<div class="card card--2col">
 					<article class="post card__box block">

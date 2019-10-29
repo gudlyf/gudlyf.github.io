@@ -6,10 +6,19 @@
     <description>Recent content on Raw Datum</description>
     <generator>Hugo -- gohugo.io</generator>
     <language>en-us</language>
-    <lastBuildDate>Mon, 07 Oct 2019 20:46:45 -0400</lastBuildDate>
+    <lastBuildDate>Mon, 28 Oct 2019 22:14:18 -0400</lastBuildDate>
     
 	<atom:link href="https://rawdatum.com/index.xml" rel="self" type="application/rss+xml" />
     
+    
+    <item>
+      <title>4th Piece: Preventing Docker logouts with concurrent Jenkins builds</title>
+      <link>https://rawdatum.com/posts/4th-piece/</link>
+      <pubDate>Mon, 28 Oct 2019 22:14:18 -0400</pubDate>
+      
+      <guid>https://rawdatum.com/posts/4th-piece/</guid>
+      <description>We were running into an issue with our Docker image builds when running them concurrently on the same Jenkins node. In order to pull or push images from/to the repository, Jenkins first needs to authenticate. By default, Docker will store the credentials for the session in the Jenkins user&amp;rsquo;s $HOME/.docker directory, in the config.json file. But this means any other builds on that node &amp;ndash; or potentially any user with access to the Jenkins $HOME &amp;ndash; can see and use those credentials themselves.</description>
+    </item>
     
     <item>
       <title>3rd Piece: The Cloud-Agnostic Argument</title>
