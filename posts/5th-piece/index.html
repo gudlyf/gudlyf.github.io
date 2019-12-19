@@ -55,7 +55,7 @@ if (!doNotTrack) {
 	</div>
 
 				<h1 class="post__title">5th Piece: A method of protecting AWS EC2 from accessing AWS meta-data URI</h1>
-				<div class="post__content"><p>Lots of folks working with AWS EC2 know about utilizing the <a href="https://docs.aws.amazon.com/AWSEC2/latest/UserGuide/ec2-instance-metadata.html">back-end metadata URL</a> (<a href="http://169.254.169.254/latest/meta-data/">http://169.254.169.254/latest/meta-data/</a>) for retrieving instance information. Some of the information you get from this link is pretty innocuous: availability zone, AMI. Some is pretty revealing: IP address and &ndash; most damaging in the wrong hands &ndash; instance IAM credentials.</p>
+				<div class="post__content"><p>Lots of folks working with AWS EC2 know about utilizing the <a href="https://docs.aws.amazon.com/AWSEC2/latest/UserGuide/ec2-instance-metadata.html">back-end metadata URL</a> (http://<span></span>169.254.169.254/latest/meta-data/) for retrieving instance information. Some of the information you get from this link is pretty innocuous: availability zone, AMI. Some is pretty revealing: IP address and &ndash; most damaging in the wrong hands &ndash; instance IAM credentials.</p>
 
 <p>Yes, if your instance has an IAM Role attached to it, its credentials &ndash; although technically temporary/rotating &ndash; are retrieved through this metadata URI. In fact, if your instance cannot reach the metadata URI, then it can&rsquo;t interact with the AWS API with whatever permissions you attached to the role.</p>
 
