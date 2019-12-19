@@ -6,10 +6,19 @@
     <description>Recent content on Raw Datum</description>
     <generator>Hugo -- gohugo.io</generator>
     <language>en-us</language>
-    <lastBuildDate>Fri, 15 Nov 2019 15:36:22 -0500</lastBuildDate>
+    <lastBuildDate>Wed, 18 Dec 2019 20:00:00 -0500</lastBuildDate>
     
 	<atom:link href="https://rawdatum.com/index.xml" rel="self" type="application/rss+xml" />
     
+    
+    <item>
+      <title>6th Piece: I bet being cloud agnostic is sounding good to GCP users right about now</title>
+      <link>https://rawdatum.com/posts/6th-piece/</link>
+      <pubDate>Wed, 18 Dec 2019 20:00:00 -0500</pubDate>
+      
+      <guid>https://rawdatum.com/posts/6th-piece/</guid>
+      <description>Some news came out yesterday — or, in Google&amp;rsquo;s eyes, an inaccurate rumor — about Google&amp;rsquo;s five-year (now three-year) plan to be the Number One cloud provider by 2023, beating out both AWS and Azure. From what was mentioned, execs inside Google at one point discussed the idea of just up and scrapping the whole cloud business altogether! In the end, they decided they&amp;rsquo;d give it until 2023 to be at the top of the cloud provider list, or &amp;hellip; ?</description>
+    </item>
     
     <item>
       <title>5th Piece: A method of protecting AWS EC2 from accessing AWS meta-data URI</title>
