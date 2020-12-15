@@ -12,14 +12,13 @@
 <meta property="og:description" content="IT, DevOps and Security: One Piece at a Time" />
 <meta property="og:type" content="website" />
 <meta property="og:url" content="https://rawdatum.com/posts/" />
-
 <meta property="og:updated_time" content="2019-12-18T20:00:00-05:00" />
 
 		<meta name="twitter:card" content="summary"/>
 <meta name="twitter:title" content="Posts"/>
 <meta name="twitter:description" content="IT, DevOps and Security: One Piece at a Time"/>
 
-	<link rel="stylesheet" href="/css/main.css">
+	<link rel="stylesheet" href="/css/bundle.css">
 	<link rel="stylesheet" href="/css/custom.css">
 	<link rel="stylesheet" href="/css/themes/dark-green.css">
 	<link rel="icon" href="/icons/16.png" sizes="16x16" type="image/png">
@@ -39,7 +38,7 @@ if (!doNotTrack) {
 <script async src='https://www.google-analytics.com/analytics.js'></script>
 
 </head>
-<body>
+<body class="body kind-section">
 	<header class="header">
 	<a class="logo" href="/">Raw Datum</a>
 	
@@ -47,6 +46,7 @@ if (!doNotTrack) {
 	<div class="primary">
 	
 	<main class="main">
+		
 		<div class="page block">
 			<h1 class="page__title">Posts</h1>
 			
@@ -54,70 +54,46 @@ if (!doNotTrack) {
 		<div class="cards">
 			
 				<div class="card card--2col">
-					<article class="post card__box block">
-	<h1 class="post__title title-excerpt"><a class="post__title-link" href="/posts/6th-piece/">6th Piece: I bet being cloud agnostic is sounding good to GCP users right about now</a></h1>
-	<div class="post__content">Some news came out yesterday — or, in Google&rsquo;s eyes, an inaccurate rumor — about Google&rsquo;s five-year (now three-year) plan to be the Number One cloud provider by 2023, beating out both AWS and Azure. From what was mentioned, execs inside Google at one point discussed the idea of just up and scrapping the whole cloud business altogether! In the end, they decided they&rsquo;d give it until 2023 to be at the top of the cloud provider list, or &hellip; ?</div>
-	<div class="post__meta meta mt tar">
-<time class="post__meta-published meta-published" datetime="2019-12-18T20:00:00">December 18, 2019</time>
-	</div>
-
+					<article class="entry card__box block">
+	<h1 class="entry__title title-excerpt"><a class="entry__title-link" href="/posts/6th-piece/">6th Piece: I bet being cloud agnostic is sounding good to GCP users right about now</a></h1>
+	<div class="entry__content">Some news came out yesterday — or, in Google&rsquo;s eyes, an inaccurate rumor — about Google&rsquo;s five-year (now three-year) plan to be the Number One cloud provider by 2023, beating out both AWS and Azure. From what was mentioned, execs inside Google at one point discussed the idea of just up and scrapping the whole cloud business altogether! In the end, they decided they&rsquo;d give it until 2023 to be at the top of the cloud provider list, or &hellip; ?</div>
 </article>
 				</div>
 			
 				<div class="card card--2col">
-					<article class="post card__box block">
-	<h1 class="post__title title-excerpt"><a class="post__title-link" href="/posts/5th-piece/">5th Piece: A method of protecting AWS EC2 from accessing AWS meta-data URI</a></h1>
-	<div class="post__content">Lots of folks working with AWS EC2 know about utilizing the back-end metadata URL (http://169.254.169.254/latest/meta-data/) for retrieving instance information. Some of the information you get from this link is pretty innocuous: availability zone, AMI. Some is pretty revealing: IP address and &ndash; most damaging in the wrong hands &ndash; instance IAM credentials.
+					<article class="entry card__box block">
+	<h1 class="entry__title title-excerpt"><a class="entry__title-link" href="/posts/5th-piece/">5th Piece: A method of protecting AWS EC2 from accessing AWS meta-data URI</a></h1>
+	<div class="entry__content">Lots of folks working with AWS EC2 know about utilizing the back-end metadata URL (http://169.254.169.254/latest/meta-data/) for retrieving instance information. Some of the information you get from this link is pretty innocuous: availability zone, AMI. Some is pretty revealing: IP address and &ndash; most damaging in the wrong hands &ndash; instance IAM credentials.
 Yes, if your instance has an IAM Role attached to it, its credentials &ndash; although technically temporary/rotating &ndash; are retrieved through this metadata URI.</div>
-	<div class="post__meta meta mt tar">
-<time class="post__meta-published meta-published" datetime="2019-11-15T15:36:22">November 15, 2019</time>
-	</div>
-
 </article>
 				</div>
 			
 				<div class="card card--2col">
-					<article class="post card__box block">
-	<h1 class="post__title title-excerpt"><a class="post__title-link" href="/posts/4th-piece/">4th Piece: Preventing Docker logouts with concurrent Jenkins builds</a></h1>
-	<div class="post__content">We were running into an issue with our Docker image builds when running them concurrently on the same Jenkins node. In order to pull or push images from/to the repository, Jenkins first needs to authenticate. By default, Docker will store the credentials for the session in the Jenkins user&rsquo;s $HOME/.docker directory, in the config.json file. But this means any other builds on that node &ndash; or potentially any user with access to the Jenkins $HOME &ndash; can see and use those credentials themselves.</div>
-	<div class="post__meta meta mt tar">
-<time class="post__meta-published meta-published" datetime="2019-10-28T22:14:18">October 28, 2019</time>
-	</div>
-
+					<article class="entry card__box block">
+	<h1 class="entry__title title-excerpt"><a class="entry__title-link" href="/posts/4th-piece/">4th Piece: Preventing Docker logouts with concurrent Jenkins builds</a></h1>
+	<div class="entry__content">We were running into an issue with our Docker image builds when running them concurrently on the same Jenkins node. In order to pull or push images from/to the repository, Jenkins first needs to authenticate. By default, Docker will store the credentials for the session in the Jenkins user&rsquo;s $HOME/.docker directory, in the config.json file. But this means any other builds on that node &ndash; or potentially any user with access to the Jenkins $HOME &ndash; can see and use those credentials themselves.</div>
 </article>
 				</div>
 			
 				<div class="card card--2col">
-					<article class="post card__box block">
-	<h1 class="post__title title-excerpt"><a class="post__title-link" href="/posts/3rd-piece/">3rd Piece: The Cloud-Agnostic Argument</a></h1>
-	<div class="post__content">If you&rsquo;ve already been running your production environment in the cloud for, say, the past five-plus years or so, you&rsquo;re probably feeling pretty happy right where you are &ndash; or, at least, pretty comfortable. And let&rsquo;s say you&rsquo;ve migrated your non-cloud app and its infrastructure over to this cloud provider, as-is: simple VMs, maybe a load balancer. Then, over the years, you&rsquo;ve matured this environment to take advantage of what this cloud provider has to offer: object storage, caching, auto-scaling, managed databases.</div>
-	<div class="post__meta meta mt tar">
-<time class="post__meta-published meta-published" datetime="2019-10-07T20:46:45">October 07, 2019</time>
-	</div>
-
+					<article class="entry card__box block">
+	<h1 class="entry__title title-excerpt"><a class="entry__title-link" href="/posts/3rd-piece/">3rd Piece: The Cloud-Agnostic Argument</a></h1>
+	<div class="entry__content">If you&rsquo;ve already been running your production environment in the cloud for, say, the past five-plus years or so, you&rsquo;re probably feeling pretty happy right where you are &ndash; or, at least, pretty comfortable. And let&rsquo;s say you&rsquo;ve migrated your non-cloud app and its infrastructure over to this cloud provider, as-is: simple VMs, maybe a load balancer. Then, over the years, you&rsquo;ve matured this environment to take advantage of what this cloud provider has to offer: object storage, caching, auto-scaling, managed databases.</div>
 </article>
 				</div>
 			
 				<div class="card card--2col">
-					<article class="post card__box block">
-	<h1 class="post__title title-excerpt"><a class="post__title-link" href="/posts/2nd-piece/">2nd Piece: Misunderstandings and Misfortunes of AWS ELBs</a></h1>
-	<div class="post__content">Well, this is embarrassing.
+					<article class="entry card__box block">
+	<h1 class="entry__title title-excerpt"><a class="entry__title-link" href="/posts/2nd-piece/">2nd Piece: Misunderstandings and Misfortunes of AWS ELBs</a></h1>
+	<div class="entry__content">Well, this is embarrassing.
 I&rsquo;ve been working with AWS for many years now, but I will likely never claim that I know everything about any particular service and, most especially, every service offering that&rsquo;s available. The velocity of change there and, really, with any modern cloud provider is dizzying, and keeping up with it can be tough. But, that doesn&rsquo;t excuse my not fully understanding the basic features of a fundamental piece of infrastructure there.</div>
-	<div class="post__meta meta mt tar">
-<time class="post__meta-published meta-published" datetime="2019-09-19T09:25:05">September 19, 2019</time>
-	</div>
-
 </article>
 				</div>
 			
 				<div class="card card--2col">
-					<article class="post card__box block">
-	<h1 class="post__title title-excerpt"><a class="post__title-link" href="/posts/first-piece/">First Piece</a></h1>
-	<div class="post__content">Passion is an interesting concept. Everyone has a different thing or person or act that defines passion for them. In the end, though, it pretty much means the same thing: it&rsquo;s what drives you. Personally. Emotionally. Maybe financially, if you&rsquo;re that sort. It&rsquo;s what excites you, maybe gives you a sense of purpose, or a goal to work toward. Wakes you up. Gets your attention. But does it define you?</div>
-	<div class="post__meta meta mt tar">
-<time class="post__meta-published meta-published" datetime="2019-09-15T14:03:44">September 15, 2019</time>
-	</div>
-
+					<article class="entry card__box block">
+	<h1 class="entry__title title-excerpt"><a class="entry__title-link" href="/posts/first-piece/">First Piece</a></h1>
+	<div class="entry__content">Passion is an interesting concept. Everyone has a different thing or person or act that defines passion for them. In the end, though, it pretty much means the same thing: it&rsquo;s what drives you. Personally. Emotionally. Maybe financially, if you&rsquo;re that sort. It&rsquo;s what excites you, maybe gives you a sense of purpose, or a goal to work toward. Wakes you up. Gets your attention. But does it define you?</div>
 </article>
 				</div>
 			

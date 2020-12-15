@@ -21,7 +21,7 @@ I&rsquo;ve been working with AWS for many years now, but I will likely never cla
 <meta name="twitter:description" content="Well, this is embarrassing.
 I&rsquo;ve been working with AWS for many years now, but I will likely never claim that I know everything about any particular service and, most especially, every service offering that&rsquo;s available. The velocity of change there and, really, with any modern cloud provider is dizzying, and keeping up with it can be tough. But, that doesn&rsquo;t excuse my not fully understanding the basic features of a fundamental piece of infrastructure there."/>
 
-	<link rel="stylesheet" href="/css/main.css">
+	<link rel="stylesheet" href="/css/bundle.css">
 	<link rel="stylesheet" href="/css/custom.css">
 	<link rel="stylesheet" href="/css/themes/dark-green.css">
 	<link rel="icon" href="/icons/16.png" sizes="16x16" type="image/png">
@@ -40,7 +40,7 @@ if (!doNotTrack) {
 <script async src='https://www.google-analytics.com/analytics.js'></script>
 
 </head>
-<body>
+<body class="body kind-page">
 	<header class="header">
 	<a class="logo" href="/">Raw Datum</a>
 	
@@ -48,38 +48,27 @@ if (!doNotTrack) {
 	<div class="primary">
 	
 	<main class="main">
+		
 		<div class="single block">
-			<article class="post">
-	<div class="post__meta meta mb">
-<time class="post__meta-published meta-published" datetime="2019-09-19T09:25:05">September 19, 2019</time>
-	</div>
-
-				<h1 class="post__title">2nd Piece: Misunderstandings and Misfortunes of AWS ELBs</h1>
-				<div class="post__content"><p>Well, this is embarrassing.</p>
-
+			<article class="entry">
+				<h1 class="entry__title">2nd Piece: Misunderstandings and Misfortunes of AWS ELBs</h1>
+				<div class="entry__content"><p>Well, this is embarrassing.</p>
 <p>I&rsquo;ve been working with AWS for many years now, but I will likely never claim that I know everything about any particular service and, most especially, every service offering that&rsquo;s available. The velocity of change there and, really, with any modern cloud provider is dizzying, and keeping up with it can be tough. But, that doesn&rsquo;t excuse my not fully understanding the basic features of a fundamental piece of infrastructure there.</p>
-
 <p>Case in point: <a href="https://aws.amazon.com/blogs/aws/elb-connection-draining-remove-instances-from-service-with-care/">Elastic Load Balancing (ELB) connection draining</a>.</p>
-
 <p>This is a simple feature that was introduced over five years ago, though I haven&rsquo;t until recently had to concern myself with it. In short, it provides the ability for an instance on a load balancer&rsquo;s Target Group (TG) to &ldquo;drain&rdquo; connections from it before removing it from the TG. From the above documentation:</p>
-
 <blockquote>
 <p>When Connection Draining is enabled and configured, the process of deregistering an instance from an Elastic Load Balancer gains an additional step. For the duration of the configured timeout, the load balancer will allow existing, in-flight requests made to an instance to complete, but it will not send any new requests to the instance. During this time, the API will report the status of the instance as <strong>InService</strong>, along with a message stating that “Instance deregistration currently in progress.” Once the timeout is reached, any remaining connections will be forcibly closed.</p>
 </blockquote>
-
-<p>Okay, pretty simple. Here&rsquo;s where my misunderstanding comes in, which is partly a language issue, partly (mostly) an issue with lack of personal testing. When the documentation says <strong>&ldquo;will allow existing, in-flight requests made to an instance to complete,&rdquo;</strong> this does not mean that once those requests are completed, the instance can go on ahead and deregister itself <em>even if the timeout hasn&rsquo;t been reached yet</em>. If you set the draining value to 300 seconds, it&rsquo;s going to wait that long to degregister the instance, no matter what.</p>
-
+<p>Okay, pretty simple. Here&rsquo;s where my misunderstanding comes in, which is partly a language issue, partly (mostly) an issue with lack of personal testing. When the documentation says <strong>&ldquo;will allow existing, in-flight requests made to an instance to complete,&quot;</strong> this does not mean that once those requests are completed, the instance can go on ahead and deregister itself <em>even if the timeout hasn&rsquo;t been reached yet</em>. If you set the draining value to 300 seconds, it&rsquo;s going to wait that long to degregister the instance, no matter what.</p>
 <p>Well, sorry, but that sucks. But I get it &ndash; it is what it is.</p>
-
 <p>Because of this, we had to find that &ldquo;sweet spot&rdquo; for deregistration when creating our code push-live process (one that we&rsquo;re unfortunately stuck with &ndash; it&rsquo;s a long story). We can&rsquo;t deregister too soon, and we can&rsquo;t wait too long. Ideally, the AWS API would either deregister upon lack of open connections to the instance (and then forcibly deregister after the set timeout maximum), and/or allow a command to the API to forcibly deregister the instance once our application sees no lingering connections &ndash; let us control it.</p>
-
 <p>I&rsquo;d been used to how haproxy worked in the deregistration process and stupidly assumed AWS ELBs worked the same. I&rsquo;ve since learned that assumptions make an ass &hellip; you know the saying.</p>
 </div>
 				
-				<footer class="post__footer">
+				<footer class="entry__footer">
 					
 					
-<div class="post__share share">
+<div class="entry__share share">
 	<a class="share__link btn" title="Share on Facebook" href="https://www.facebook.com/sharer/sharer.php?u=https%3a%2f%2frawdatum.com%2fposts%2f2nd-piece%2f" target="_blank" rel="noopener noreferrer" onclick="window.open(this.href, 'Share on Facebook', 'width=800,height=600,toolbar=0,status=0'); return false">
 		<svg class="share__icon" aria-label="Facebook" role="img" width="32" height="32" viewBox="0 0 512 512"><path d="M330 512V322h64l9-74h-73v-47c0-22 6-36 37-36h39V99c-7-1-30-3-57-3-57 0-95 34-95 98v54h-64v74h64v190z"/></svg>
 	</a>

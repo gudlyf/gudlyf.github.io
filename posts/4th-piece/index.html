@@ -19,7 +19,7 @@
 <meta name="twitter:title" content="4th Piece: Preventing Docker logouts with concurrent Jenkins builds"/>
 <meta name="twitter:description" content="We were running into an issue with our Docker image builds when running them concurrently on the same Jenkins node. In order to pull or push images from/to the repository, Jenkins first needs to authenticate. By default, Docker will store the credentials for the session in the Jenkins user&rsquo;s $HOME/.docker directory, in the config.json file. But this means any other builds on that node &ndash; or potentially any user with access to the Jenkins $HOME &ndash; can see and use those credentials themselves."/>
 
-	<link rel="stylesheet" href="/css/main.css">
+	<link rel="stylesheet" href="/css/bundle.css">
 	<link rel="stylesheet" href="/css/custom.css">
 	<link rel="stylesheet" href="/css/themes/dark-green.css">
 	<link rel="icon" href="/icons/16.png" sizes="16x16" type="image/png">
@@ -38,7 +38,7 @@ if (!doNotTrack) {
 <script async src='https://www.google-analytics.com/analytics.js'></script>
 
 </head>
-<body>
+<body class="body kind-page">
 	<header class="header">
 	<a class="logo" href="/">Raw Datum</a>
 	
@@ -46,23 +46,15 @@ if (!doNotTrack) {
 	<div class="primary">
 	
 	<main class="main">
+		
 		<div class="single block">
-			<article class="post">
-	<div class="post__meta meta mb">
-<time class="post__meta-published meta-published" datetime="2019-10-28T22:14:18">October 28, 2019</time>
-	</div>
-
-				<h1 class="post__title">4th Piece: Preventing Docker logouts with concurrent Jenkins builds</h1>
-				<div class="post__content"><p>We were running into an issue with our Docker image builds when running them concurrently on the same Jenkins node. In order to pull or push images from/to the repository, Jenkins first needs to authenticate. By default, Docker will store the credentials for the session in the Jenkins user&rsquo;s <code>$HOME/.docker</code> directory, in the <code>config.json</code> file. But this means any other builds on that node &ndash; or potentially any user with access to the Jenkins <code>$HOME</code> &ndash; can see and use those credentials themselves.</p>
-
+			<article class="entry">
+				<h1 class="entry__title">4th Piece: Preventing Docker logouts with concurrent Jenkins builds</h1>
+				<div class="entry__content"><p>We were running into an issue with our Docker image builds when running them concurrently on the same Jenkins node. In order to pull or push images from/to the repository, Jenkins first needs to authenticate. By default, Docker will store the credentials for the session in the Jenkins user&rsquo;s <code>$HOME/.docker</code> directory, in the <code>config.json</code> file. But this means any other builds on that node &ndash; or potentially any user with access to the Jenkins <code>$HOME</code> &ndash; can see and use those credentials themselves.</p>
 <p>The issue with these credentials being stored insecurely can be mitigated using <a href="https://github.com/docker/docker-credential-helpers">credential helpers</a>, but that doesn&rsquo;t necessarily prevent other Jenkins jobs from using it. But I&rsquo;m getting a bit sidetracked here.</p>
-
 <p>The issue we had was with concurrent builds on the same node, and authentication being lost after the first job completes. Because we want to clean up after each build and logout Jenkins from the Docker repo, once the first job does so, then <em>the other jobs running at that time lose their authentication</em>. This is because they&rsquo;re all using the same configuration directory.</p>
-
 <p>Thankfully, Docker will honor the <a href="https://docs.docker.com/engine/reference/commandline/cli/"><code>DOCKER_CONFIG</code></a> environment variable when it&rsquo;s invoked. This will use that directory for configuration file writing, which includes the session&rsquo;s credential store. If we use a unique one for each job &ndash; a location we&rsquo;re sure other jobs won&rsquo;t share &ndash; we can reliably login/logout from the Docker repository without affecting any jobs that may be running at the same time.</p>
-
 <p>Here&rsquo;s a quick example showing what we did:</p>
-
 <pre><code>pipeline {
 
     agent { label 'docker-build' } // Only build on nodes labeled 'docker-build'
@@ -97,10 +89,7 @@ if (!doNotTrack) {
                 }
             }
         }
-</code></pre>
-
-<p>We do a lot of stuff for the build in there and after it, of course. Then the post processing and cleanup:</p>
-
+</code></pre><p>We do a lot of stuff for the build in there and after it, of course. Then the post processing and cleanup:</p>
 <pre><code>    post {
         success { /* -- SNIP -- */ }
         failure { /* -- SNIP -- */ }
@@ -115,17 +104,14 @@ if (!doNotTrack) {
             cleanWs()
         }
     }
-</code></pre>
-
-<p>Hope you find this useful!</p>
-
+</code></pre><p>Hope you find this useful!</p>
 <p>-KM</p>
 </div>
 				
-				<footer class="post__footer">
+				<footer class="entry__footer">
 					
 					
-<div class="post__share share">
+<div class="entry__share share">
 	<a class="share__link btn" title="Share on Facebook" href="https://www.facebook.com/sharer/sharer.php?u=https%3a%2f%2frawdatum.com%2fposts%2f4th-piece%2f" target="_blank" rel="noopener noreferrer" onclick="window.open(this.href, 'Share on Facebook', 'width=800,height=600,toolbar=0,status=0'); return false">
 		<svg class="share__icon" aria-label="Facebook" role="img" width="32" height="32" viewBox="0 0 512 512"><path d="M330 512V322h64l9-74h-73v-47c0-22 6-36 37-36h39V99c-7-1-30-3-57-3-57 0-95 34-95 98v54h-64v74h64v190z"/></svg>
 	</a>
