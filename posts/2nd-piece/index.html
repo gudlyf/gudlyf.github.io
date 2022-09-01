@@ -12,9 +12,10 @@
 <meta property="og:description" content="Well, this is embarrassing.
 I&rsquo;ve been working with AWS for many years now, but I will likely never claim that I know everything about any particular service and, most especially, every service offering that&rsquo;s available. The velocity of change there and, really, with any modern cloud provider is dizzying, and keeping up with it can be tough. But, that doesn&rsquo;t excuse my not fully understanding the basic features of a fundamental piece of infrastructure there." />
 <meta property="og:type" content="article" />
-<meta property="og:url" content="https://rawdatum.com/posts/2nd-piece/" />
+<meta property="og:url" content="https://rawdatum.com/posts/2nd-piece/" /><meta property="article:section" content="posts" />
 <meta property="article:published_time" content="2019-09-19T09:25:05-04:00" />
 <meta property="article:modified_time" content="2019-09-19T09:25:05-04:00" />
+
 
 		<meta name="twitter:card" content="summary"/>
 <meta name="twitter:title" content="2nd Piece: Misunderstandings and Misfortunes of AWS ELBs"/>
@@ -59,7 +60,7 @@ if (!doNotTrack) {
 <blockquote>
 <p>When Connection Draining is enabled and configured, the process of deregistering an instance from an Elastic Load Balancer gains an additional step. For the duration of the configured timeout, the load balancer will allow existing, in-flight requests made to an instance to complete, but it will not send any new requests to the instance. During this time, the API will report the status of the instance as <strong>InService</strong>, along with a message stating that “Instance deregistration currently in progress.” Once the timeout is reached, any remaining connections will be forcibly closed.</p>
 </blockquote>
-<p>Okay, pretty simple. Here&rsquo;s where my misunderstanding comes in, which is partly a language issue, partly (mostly) an issue with lack of personal testing. When the documentation says <strong>&ldquo;will allow existing, in-flight requests made to an instance to complete,&quot;</strong> this does not mean that once those requests are completed, the instance can go on ahead and deregister itself <em>even if the timeout hasn&rsquo;t been reached yet</em>. If you set the draining value to 300 seconds, it&rsquo;s going to wait that long to degregister the instance, no matter what.</p>
+<p>Okay, pretty simple. Here&rsquo;s where my misunderstanding comes in, which is partly a language issue, partly (mostly) an issue with lack of personal testing. When the documentation says <strong>&ldquo;will allow existing, in-flight requests made to an instance to complete,&rdquo;</strong> this does not mean that once those requests are completed, the instance can go on ahead and deregister itself <em>even if the timeout hasn&rsquo;t been reached yet</em>. If you set the draining value to 300 seconds, it&rsquo;s going to wait that long to degregister the instance, no matter what.</p>
 <p>Well, sorry, but that sucks. But I get it &ndash; it is what it is.</p>
 <p>Because of this, we had to find that &ldquo;sweet spot&rdquo; for deregistration when creating our code push-live process (one that we&rsquo;re unfortunately stuck with &ndash; it&rsquo;s a long story). We can&rsquo;t deregister too soon, and we can&rsquo;t wait too long. Ideally, the AWS API would either deregister upon lack of open connections to the instance (and then forcibly deregister after the set timeout maximum), and/or allow a command to the API to forcibly deregister the instance once our application sees no lingering connections &ndash; let us control it.</p>
 <p>I&rsquo;d been used to how haproxy worked in the deregistration process and stupidly assumed AWS ELBs worked the same. I&rsquo;ve since learned that assumptions make an ass &hellip; you know the saying.</p>
@@ -135,7 +136,7 @@ if (!doNotTrack) {
 			<svg class="social__icon" aria-label="Medium" role="img" width="32" height="32" viewBox="0 0 512 512"><path d="M125 173c0-4-2-9-5-11l-31-38v-6h98l75 166 67-166h93v6l-27 26c-2 1-3 4-3 7v190c0 3 1 6 3 8l27 25v6H289v-6l27-26c3-3 3-4 3-8V193l-76 192h-10l-88-192v129c-1 5 1 11 5 15l35 43v5H85v-5l35-43c4-4 6-10 5-15z"/></svg>
 		</a>
 </div>
-	<div class="footer__copyright">© 2020 Keith McDuffee. <span class="footer__copyright-credits">Powered by <a href="https://gohugo.io/" rel="nofollow noopener" target="_blank">Hugo</a> and <a href="https://github.com/vimux/binario" rel="nofollow noopener" target="_blank">Binario</a> theme.</span></div>
+	<div class="footer__copyright">© 2022 Keith McDuffee. <span class="footer__copyright-credits">Powered by <a href="https://gohugo.io/" rel="nofollow noopener" target="_blank">Hugo</a> and <a href="https://github.com/vimux/binario" rel="nofollow noopener" target="_blank">Binario</a> theme.</span></div>
 </footer>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.6/MathJax.js?config=TeX-AMS-MML_HTMLorMML" async></script>
 

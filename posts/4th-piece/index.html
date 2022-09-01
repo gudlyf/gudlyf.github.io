@@ -11,9 +11,10 @@
 		<meta property="og:title" content="4th Piece: Preventing Docker logouts with concurrent Jenkins builds" />
 <meta property="og:description" content="We were running into an issue with our Docker image builds when running them concurrently on the same Jenkins node. In order to pull or push images from/to the repository, Jenkins first needs to authenticate. By default, Docker will store the credentials for the session in the Jenkins user&rsquo;s $HOME/.docker directory, in the config.json file. But this means any other builds on that node &ndash; or potentially any user with access to the Jenkins $HOME &ndash; can see and use those credentials themselves." />
 <meta property="og:type" content="article" />
-<meta property="og:url" content="https://rawdatum.com/posts/4th-piece/" />
+<meta property="og:url" content="https://rawdatum.com/posts/4th-piece/" /><meta property="article:section" content="posts" />
 <meta property="article:published_time" content="2019-10-28T22:14:18-04:00" />
 <meta property="article:modified_time" content="2019-10-28T22:14:18-04:00" />
+
 
 		<meta name="twitter:card" content="summary"/>
 <meta name="twitter:title" content="4th Piece: Preventing Docker logouts with concurrent Jenkins builds"/>
@@ -55,51 +56,51 @@ if (!doNotTrack) {
 <p>The issue we had was with concurrent builds on the same node, and authentication being lost after the first job completes. Because we want to clean up after each build and logout Jenkins from the Docker repo, once the first job does so, then <em>the other jobs running at that time lose their authentication</em>. This is because they&rsquo;re all using the same configuration directory.</p>
 <p>Thankfully, Docker will honor the <a href="https://docs.docker.com/engine/reference/commandline/cli/"><code>DOCKER_CONFIG</code></a> environment variable when it&rsquo;s invoked. This will use that directory for configuration file writing, which includes the session&rsquo;s credential store. If we use a unique one for each job &ndash; a location we&rsquo;re sure other jobs won&rsquo;t share &ndash; we can reliably login/logout from the Docker repository without affecting any jobs that may be running at the same time.</p>
 <p>Here&rsquo;s a quick example showing what we did:</p>
-<pre><code>pipeline {
+<pre tabindex="0"><code>pipeline {
 
-    agent { label 'docker-build' } // Only build on nodes labeled 'docker-build'
+    agent { label &#39;docker-build&#39; } // Only build on nodes labeled &#39;docker-build&#39;
     options {
         timestamps ()
     }
 
     environment {
-        DOCKER_REPO         = &quot;docker-repo.mydomain.com&quot;              // Our local Docker repo
-        DOCKER_CONFIG       = &quot;${WORKSPACE}/${BUILD_NUMBER}/.docker&quot;  // Unique location for this job
+        DOCKER_REPO         = &#34;docker-repo.mydomain.com&#34;              // Our local Docker repo
+        DOCKER_CONFIG       = &#34;${WORKSPACE}/${BUILD_NUMBER}/.docker&#34;  // Unique location for this job
     }
 
     stages {
-        stage('prep environment') {  // Create the location for the DOCKER_CONFIG for this job
+        stage(&#39;prep environment&#39;) {  // Create the location for the DOCKER_CONFIG for this job
             steps {
                 sh(
-                    script: &quot;&quot;&quot;
-                        mkdir -p &quot;${DOCKER_CONFIG}&quot;
-                    &quot;&quot;&quot;
+                    script: &#34;&#34;&#34;
+                        mkdir -p &#34;${DOCKER_CONFIG}&#34;
+                    &#34;&#34;&#34;
                 )
             }
         }
-        stage('pull latest base images') {
+        stage(&#39;pull latest base images&#39;) {
             steps {
-                withCredentials([usernamePassword(credentialsId: 'jenkins-docker-repo', usernameVariable: 'REPO_USER', passwordVariable: 'REPO_PASSWORD')]) {
+                withCredentials([usernamePassword(credentialsId: &#39;jenkins-docker-repo&#39;, usernameVariable: &#39;REPO_USER&#39;, passwordVariable: &#39;REPO_PASSWORD&#39;)]) {
                     sh(
-                        script: &quot;&quot;&quot;
-                            docker login -u &quot;${REPO_USER}&quot; -p &quot;${REPO_PASSWORD}&quot; ${DOCKER_REPO}
+                        script: &#34;&#34;&#34;
+                            docker login -u &#34;${REPO_USER}&#34; -p &#34;${REPO_PASSWORD}&#34; ${DOCKER_REPO}
                             docker pull ${DOCKER_REPO}/my_project/build-base:stable
-                        &quot;&quot;&quot;
+                        &#34;&#34;&#34;
                     )
                 }
             }
         }
 </code></pre><p>We do a lot of stuff for the build in there and after it, of course. Then the post processing and cleanup:</p>
-<pre><code>    post {
+<pre tabindex="0"><code>    post {
         success { /* -- SNIP -- */ }
         failure { /* -- SNIP -- */ }
-        cleanup {  // Lots of builds means lots of images we don't need to keep, so routinely clean them up
+        cleanup {  // Lots of builds means lots of images we don&#39;t need to keep, so routinely clean them up
             sh(
-                script: &quot;&quot;&quot;
-                    docker system prune -a -f --filter &quot;until=2h&quot;
+                script: &#34;&#34;&#34;
+                    docker system prune -a -f --filter &#34;until=2h&#34;
                     docker volume ls -qf dangling=true | xargs -r docker volume rm
                     docker logout ${DOCKER_REPO}
-                &quot;&quot;&quot;
+                &#34;&#34;&#34;
             )
             cleanWs()
         }
@@ -178,7 +179,7 @@ if (!doNotTrack) {
 			<svg class="social__icon" aria-label="Medium" role="img" width="32" height="32" viewBox="0 0 512 512"><path d="M125 173c0-4-2-9-5-11l-31-38v-6h98l75 166 67-166h93v6l-27 26c-2 1-3 4-3 7v190c0 3 1 6 3 8l27 25v6H289v-6l27-26c3-3 3-4 3-8V193l-76 192h-10l-88-192v129c-1 5 1 11 5 15l35 43v5H85v-5l35-43c4-4 6-10 5-15z"/></svg>
 		</a>
 </div>
-	<div class="footer__copyright">© 2020 Keith McDuffee. <span class="footer__copyright-credits">Powered by <a href="https://gohugo.io/" rel="nofollow noopener" target="_blank">Hugo</a> and <a href="https://github.com/vimux/binario" rel="nofollow noopener" target="_blank">Binario</a> theme.</span></div>
+	<div class="footer__copyright">© 2022 Keith McDuffee. <span class="footer__copyright-credits">Powered by <a href="https://gohugo.io/" rel="nofollow noopener" target="_blank">Hugo</a> and <a href="https://github.com/vimux/binario" rel="nofollow noopener" target="_blank">Binario</a> theme.</span></div>
 </footer>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.6/MathJax.js?config=TeX-AMS-MML_HTMLorMML" async></script>
 

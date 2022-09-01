@@ -63,5 +63,17 @@ I&amp;rsquo;ve been working with AWS for many years now, but I will likely never
       <description>Passion is an interesting concept. Everyone has a different thing or person or act that defines passion for them. In the end, though, it pretty much means the same thing: it&amp;rsquo;s what drives you. Personally. Emotionally. Maybe financially, if you&amp;rsquo;re that sort. It&amp;rsquo;s what excites you, maybe gives you a sense of purpose, or a goal to work toward. Wakes you up. Gets your attention. But does it define you?</description>
     </item>
     
+    <item>
+      <title></title>
+      <link>https://rawdatum.com/readme/</link>
+      <pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
+      
+      <guid>https://rawdatum.com/readme/</guid>
+      <description>Steps to build site from initial clone of this repo:
+Create submodule of the binario theme: git submodule add -f https://github.com/vimux/binario themes/binario
+Create submodule of the repo where the site content will be deployed to: git submodule add -f git@github.com:gudlyf/gudlyf.github.io.git public
+Run hugo to build the site Once built, you can publish changes to the live site: cd public &amp;amp;&amp;amp; git add . &amp;amp;&amp;amp; git commit -m &#39;Site updates&#39; &amp;amp;&amp;amp; git push</description>
+    </item>
+    
   </channel>
 </rss>
