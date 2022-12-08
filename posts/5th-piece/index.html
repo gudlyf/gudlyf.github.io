@@ -16,7 +16,6 @@ Yes, if your instance has an IAM Role attached to it, its credentials &ndash; al
 <meta property="article:published_time" content="2019-11-15T15:36:22-05:00" />
 <meta property="article:modified_time" content="2019-11-15T15:36:22-05:00" />
 
-
 		<meta name="twitter:card" content="summary"/>
 <meta name="twitter:title" content="5th Piece: A method of protecting AWS EC2 from accessing AWS meta-data URI"/>
 <meta name="twitter:description" content="Lots of folks working with AWS EC2 know about utilizing the back-end metadata URL (http://169.254.169.254/latest/meta-data/) for retrieving instance information. Some of the information you get from this link is pretty innocuous: availability zone, AMI. Some is pretty revealing: IP address and &ndash; most damaging in the wrong hands &ndash; instance IAM credentials.

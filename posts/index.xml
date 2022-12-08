@@ -6,7 +6,16 @@
     <description>Recent content in Posts on Raw Datum</description>
     <generator>Hugo -- gohugo.io</generator>
     <language>en-us</language>
-    <lastBuildDate>Wed, 18 Dec 2019 20:00:00 -0500</lastBuildDate><atom:link href="https://rawdatum.com/posts/index.xml" rel="self" type="application/rss+xml" />
+    <lastBuildDate>Thu, 08 Dec 2022 15:06:26 -0500</lastBuildDate><atom:link href="https://rawdatum.com/posts/index.xml" rel="self" type="application/rss+xml" />
+    <item>
+      <title>8th Piece: Using ChatGPT to convert Terraform for AWS to Azure and GCP</title>
+      <link>https://rawdatum.com/posts/8th-piece/</link>
+      <pubDate>Thu, 08 Dec 2022 15:06:26 -0500</pubDate>
+      
+      <guid>https://rawdatum.com/posts/8th-piece/</guid>
+      <description>Probably you&amp;rsquo;ve already heard of and have seen examples of ChatGPT, an amazing (especially since it&amp;rsquo;s essentially in its infancy) web-based AI program that users interact with in plain English (or any modern language) to get AI-generated responses. The questions you ask can be simple and straightforward or even complex and theoretical; they can be anything from writing lyrics to a new (or existing!) song, screenplay scenes for a movie, and in the style of famous persons.</description>
+    </item>
+    
     <item>
       <title>6th Piece: I bet being cloud agnostic is sounding good to GCP users right about now</title>
       <link>https://rawdatum.com/posts/6th-piece/</link>

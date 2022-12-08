@@ -15,7 +15,6 @@
 <meta property="article:published_time" content="2019-10-28T22:14:18-04:00" />
 <meta property="article:modified_time" content="2019-10-28T22:14:18-04:00" />
 
-
 		<meta name="twitter:card" content="summary"/>
 <meta name="twitter:title" content="4th Piece: Preventing Docker logouts with concurrent Jenkins builds"/>
 <meta name="twitter:description" content="We were running into an issue with our Docker image builds when running them concurrently on the same Jenkins node. In order to pull or push images from/to the repository, Jenkins first needs to authenticate. By default, Docker will store the credentials for the session in the Jenkins user&rsquo;s $HOME/.docker directory, in the config.json file. But this means any other builds on that node &ndash; or potentially any user with access to the Jenkins $HOME &ndash; can see and use those credentials themselves."/>
