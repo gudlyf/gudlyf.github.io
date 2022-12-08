@@ -112,8 +112,8 @@ resource &#34;azurerm_virtual_machine&#34; &#34;my_instance&#34; {
     azurerm_security_group.instances.id
   ]
 
-root_block_device {
-  disk_size_gb = &#34;8&#34;
+  root_block_device {
+    disk_size_gb = &#34;8&#34;
   }
 
   provisioner &#34;local-exec&#34; {
