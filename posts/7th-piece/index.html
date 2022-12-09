@@ -121,7 +121,7 @@ resource &#34;azurerm_virtual_machine&#34; &#34;my_instance&#34; {
   }
 
 }
-</code></pre><p>That &hellip; would work! It did not complain that it didn&rsquo;t know about the remote state or the variables, but that would just complicate what I asked it anyway. It also assumed that the user on the new instance was still named <code>ec2-user</code>, but I didn&rsquo;t expect it to understand that, especially since it was nested inside the provisioner block.</p>
+</code></pre><p>That &hellip; would (*<em>Edit: sort of</em>) work! It did not complain that it didn&rsquo;t know about the remote state or the variables, but that would just complicate what I asked it anyway. It also assumed that the user on the new instance was still named <code>ec2-user</code>, but I didn&rsquo;t expect it to understand that, especially since it was nested inside the provisioner block.</p>
 <p>Next I asked <em>&ldquo;Write the same code to work in GCP.&rdquo;</em> Here&rsquo;s that response:</p>
 <pre tabindex="0"><code>Here is the AWS Terraform code rewritten to work in GCP:
 
@@ -157,7 +157,7 @@ resource &#34;google_compute_instance&#34; &#34;my_instance&#34; {
     command = &#34;sleep 180;ANSIBLE_HOST_KEY_CHECKING=False ansible-playbook -u ${var.user} --private-key ${var.private_key_file} -i &#39;${self.network_interface.0.access_config.0.nat_ip},&#39; ${path.cwd}/ansible/my_instance.yml&#34;
   }
 }
-</code></pre><p>Again, that works!</p>
+</code></pre><p>Again, that (*<em>Edit: sort of</em>) works!</p>
 <p>Since it seems to be pulling in the equivalent instance family/type from each provider, I wondered whether it actually was correct. Does ChatGPT know which instance types match the other providers?</p>
 <p><em>&ldquo;What is the equivalent of an AWS t3.micro in Azure and GCP?&rdquo;</em></p>
 <p><code>In Azure, the equivalent of an AWS t3.micro instance is the Standard_B1s instance type. In GCP, the equivalent of an AWS t3.micro instance is the f1-micro machine type. These instance types and machine types offer similar performance and specs, including vCPU and memory, as the AWS t3.micro instance.</code></p>
@@ -213,6 +213,14 @@ resource &#34;google_compute_instance&#34; &#34;my_instance&#34; {
 <p><code>Note that the Azure and GCP equivalents listed above are only approximate, and there may be some differences in the exact specs and performance of the different instance types and machine types. It is always best to consult the official documentation and compare the specific specs of the instance types and machine types to ensure that you are choosing the best option for your needs.</code></p>
 <p>This is the <em>early days</em> of ChatGPT. Can you imagine if/when they license this technology out to Hashicorp to do this conversion for you? You might be able to get <em>true</em> cloud agnosticity with your IaC, allowing you to quickly move and provision your resources in another provider, without having to spend hours upon hours trying to figure out what it should look like.</p>
 <p>Not perfect, but ChatGPT is just a baby. Give &rsquo;er time.</p>
+<p>* <em>While the Terraform code it provided is technically correct or at least provides a general guideline of how the provided Terraform might look in the other provider, it may be using an older version of the provider. There are a lot more considerations such as network interfaces that may need to be addressed.</em></p>
+<p><em>I tried to correct ChatGPT on the Azure creation, but it was stubborn:</em></p>
+<p><em>&ldquo;Shouldn&rsquo;t image_reference instead be storage_image_reference?&rdquo;</em></p>
+<p><code>The image_reference field in the Terraform code is correct and should not be changed to storage_image_reference.</code></p>
+<p><code>In Azure Resource Manager (ARM), the image_reference field is used to specify the source image for a virtual machine. It is typically used with the azurerm_image data source to reference a specific image in Azure Marketplace.</code></p>
+<p><code>The storage_image_reference field, on the other hand, is used to specify the location of a custom image in Azure Storage. It is typically used with the azurerm_virtual_machine_extension resource to add a custom image to a virtual machine.</code></p>
+<p><code>In this case, the code is using the azurerm_image data source to reference a specific image in Azure Marketplace, so the image_reference field is the correct one to use.</code></p>
+<p>So, relax &ndash; our jobs are safe (for now) &hellip;</p>
 </div>
 				
 				<footer class="entry__footer">
