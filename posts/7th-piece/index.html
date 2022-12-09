@@ -121,7 +121,7 @@ resource &#34;azurerm_virtual_machine&#34; &#34;my_instance&#34; {
   }
 
 }
-</code></pre><p>That &hellip; would (<sup id="fnref:1"><a href="#fn:1" class="footnote-ref" role="doc-noteref">1</a></sup>:<em>Edit: sort of</em>) work! It did not complain that it didn&rsquo;t know about the remote state or the variables, but that would just complicate what I asked it anyway. It also assumed that the user on the new instance was still named <code>ec2-user</code>, but I didn&rsquo;t expect it to understand that, especially since it was nested inside the provisioner block.</p>
+</code></pre><p>That &hellip; would (<em>Edit: sort of</em><sup id="fnref:1"><a href="#fn:1" class="footnote-ref" role="doc-noteref">1</a></sup>) work! It did not complain that it didn&rsquo;t know about the remote state or the variables, but that would just complicate what I asked it anyway. It also assumed that the user on the new instance was still named <code>ec2-user</code>, but I didn&rsquo;t expect it to understand that, especially since it was nested inside the provisioner block.</p>
 <p>Next I asked <em>&ldquo;Write the same code to work in GCP.&rdquo;</em> Here&rsquo;s that response:</p>
 <pre tabindex="0"><code>Here is the AWS Terraform code rewritten to work in GCP:
 
@@ -157,7 +157,7 @@ resource &#34;google_compute_instance&#34; &#34;my_instance&#34; {
     command = &#34;sleep 180;ANSIBLE_HOST_KEY_CHECKING=False ansible-playbook -u ${var.user} --private-key ${var.private_key_file} -i &#39;${self.network_interface.0.access_config.0.nat_ip},&#39; ${path.cwd}/ansible/my_instance.yml&#34;
   }
 }
-</code></pre><p>Again, that (<sup id="fnref1:1"><a href="#fn:1" class="footnote-ref" role="doc-noteref">1</a></sup>:<em>Edit: sort of</em>) works!</p>
+</code></pre><p>Again, that (<em>Edit: sort of</em><sup id="fnref1:1"><a href="#fn:1" class="footnote-ref" role="doc-noteref">1</a></sup>) works!</p>
 <p>Since it seems to be pulling in the equivalent instance family/type from each provider, I wondered whether it actually was correct. Does ChatGPT know which instance types match the other providers?</p>
 <p><em>&ldquo;What is the equivalent of an AWS t3.micro in Azure and GCP?&rdquo;</em></p>
 <p><code>In Azure, the equivalent of an AWS t3.micro instance is the Standard_B1s instance type. In GCP, the equivalent of an AWS t3.micro instance is the f1-micro machine type. These instance types and machine types offer similar performance and specs, including vCPU and memory, as the AWS t3.micro instance.</code></p>
