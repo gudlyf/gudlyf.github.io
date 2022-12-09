@@ -216,10 +216,10 @@ resource &#34;google_compute_instance&#34; &#34;my_instance&#34; {
 <p>* <em>While the Terraform code it provided is technically correct or at least provides a general guideline of how the provided Terraform might look in the other provider, it may be using an older version of the provider. There are a lot more considerations such as network interfaces that may need to be addressed.</em></p>
 <p><em>I tried to correct ChatGPT on the Azure creation, but it was stubborn:</em></p>
 <p><em>&ldquo;Shouldn&rsquo;t image_reference instead be storage_image_reference?&rdquo;</em></p>
-<p><code>The image_reference field in the Terraform code is correct and should not be changed to storage_image_reference.</code></p>
-<p><code>In Azure Resource Manager (ARM), the image_reference field is used to specify the source image for a virtual machine. It is typically used with the azurerm_image data source to reference a specific image in Azure Marketplace.</code></p>
-<p><code>The storage_image_reference field, on the other hand, is used to specify the location of a custom image in Azure Storage. It is typically used with the azurerm_virtual_machine_extension resource to add a custom image to a virtual machine.</code></p>
-<p><code>In this case, the code is using the azurerm_image data source to reference a specific image in Azure Marketplace, so the image_reference field is the correct one to use.</code></p>
+<p><code>The 'image_reference' field in the Terraform code is correct and should not be changed to 'storage_image_reference'.</code></p>
+<p><code>In Azure Resource Manager (ARM), the 'image_reference' field is used to specify the source image for a virtual machine. It is typically used with the 'azurerm_image' data source to reference a specific image in Azure Marketplace.</code></p>
+<p><code>The 'storage_image_reference' field, on the other hand, is used to specify the location of a custom image in Azure Storage. It is typically used with the 'azurerm_virtual_machine_extension' resource to add a custom image to a virtual machine.</code></p>
+<p><code>In this case, the code is using the 'azurerm_image' data source to reference a specific image in Azure Marketplace, so the 'image_reference' field is the correct one to use.</code></p>
 <p>So, relax &ndash; our jobs are safe (for now) &hellip;</p>
 </div>
 				
