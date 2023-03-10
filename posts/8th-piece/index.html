@@ -5,19 +5,21 @@
 	<meta http-equiv="X-UA-Compatible" content="IE=edge">
 	<meta name="viewport" content="width=device-width, initial-scale=1">
 	<meta name="theme-color" content="#1b1b1b">
-	<title>8th Piece: Using ChatGPT to convert Terraform for AWS to Azure and GCP | Raw Datum</title>
+	<title>8th Piece: Preventing uBlock Origin from blocking sentry.io with CloudFront | Raw Datum</title>
 	<script>(function(d,e){d[e]=d[e].replace("no-js","js");})(document.documentElement,"className");</script>
 	<meta name="description" content="">
-		<meta property="og:title" content="8th Piece: Using ChatGPT to convert Terraform for AWS to Azure and GCP" />
-<meta property="og:description" content="Probably you&rsquo;ve already heard of and have seen examples of ChatGPT, an amazing (especially since it&rsquo;s essentially in its infancy) web-based AI program that users interact with in plain English (or any modern language) to get AI-generated responses. The questions you ask can be simple and straightforward or even complex and theoretical; they can be anything from writing lyrics to a new (or existing!) song, screenplay scenes for a movie, and in the style of famous persons." />
+		<meta property="og:title" content="8th Piece: Preventing uBlock Origin from blocking sentry.io with CloudFront" />
+<meta property="og:description" content="In my development of StackRef, I&rsquo;m interested in tracing down React UI errors as they happen to the user. Sentry.io has been a great tool for this, and their free version gets me what I need, at least for the moment.
+Recently I had a user test the site out, where they ran into an error that did not show up in Sentry. Why? Because the uBlock Origin plugin is set by default to block that traffic." />
 <meta property="og:type" content="article" />
 <meta property="og:url" content="https://rawdatum.com/posts/8th-piece/" /><meta property="article:section" content="posts" />
-<meta property="article:published_time" content="2022-12-08T15:06:26-05:00" />
-<meta property="article:modified_time" content="2022-12-08T15:06:26-05:00" />
+<meta property="article:published_time" content="2023-03-09T18:39:11-05:00" />
+<meta property="article:modified_time" content="2023-03-09T18:39:11-05:00" />
 
 		<meta name="twitter:card" content="summary"/>
-<meta name="twitter:title" content="8th Piece: Using ChatGPT to convert Terraform for AWS to Azure and GCP"/>
-<meta name="twitter:description" content="Probably you&rsquo;ve already heard of and have seen examples of ChatGPT, an amazing (especially since it&rsquo;s essentially in its infancy) web-based AI program that users interact with in plain English (or any modern language) to get AI-generated responses. The questions you ask can be simple and straightforward or even complex and theoretical; they can be anything from writing lyrics to a new (or existing!) song, screenplay scenes for a movie, and in the style of famous persons."/>
+<meta name="twitter:title" content="8th Piece: Preventing uBlock Origin from blocking sentry.io with CloudFront"/>
+<meta name="twitter:description" content="In my development of StackRef, I&rsquo;m interested in tracing down React UI errors as they happen to the user. Sentry.io has been a great tool for this, and their free version gets me what I need, at least for the moment.
+Recently I had a user test the site out, where they ran into an error that did not show up in Sentry. Why? Because the uBlock Origin plugin is set by default to block that traffic."/>
 
 	<link rel="stylesheet" href="/css/bundle.css">
 	<link rel="stylesheet" href="/css/custom.css">
@@ -26,21 +28,22 @@
 	<link rel="icon" href="/icons/32.png" sizes="32x32" type="image/png">
 	<link rel="manifest" href="/manifest.json">
 		
-<script type="application/javascript">
+<script async src="https://www.googletagmanager.com/gtag/js?id=G-3R54M119WD"></script>
+<script>
 var doNotTrack = false;
 if (!doNotTrack) {
-	window.ga=window.ga||function(){(ga.q=ga.q||[]).push(arguments)};ga.l=+new Date;
-	ga('create', 'UA-2060500-12', 'auto');
-	
-	ga('send', 'pageview');
+	window.dataLayer = window.dataLayer || [];
+	function gtag(){dataLayer.push(arguments);}
+	gtag('js', new Date());
+	gtag('config', 'G-3R54M119WD', { 'anonymize_ip': false });
 }
 </script>
-<script async src='https://www.google-analytics.com/analytics.js'></script>
 
 </head>
 <body class="body kind-page">
 	<header class="header">
 	<a class="logo" href="/">Raw Datum</a>
+
 	
 </header>
 	<div class="primary">
@@ -49,170 +52,123 @@ if (!doNotTrack) {
 		
 		<div class="single block">
 			<article class="entry">
-				<h1 class="entry__title">8th Piece: Using ChatGPT to convert Terraform for AWS to Azure and GCP</h1>
-				<div class="entry__content"><p>Probably you&rsquo;ve already heard of and have seen examples of <a href="https://chat.openai.com/">ChatGPT</a>, an amazing (especially since it&rsquo;s essentially in its infancy) web-based AI program that users interact with in plain English (or any modern language) to get AI-generated responses. The questions you ask can be simple and straightforward or even complex and theoretical; they can be anything from writing lyrics to a new (or existing!) song, screenplay scenes for a movie, and in the style of famous persons.</p>
-<p>Those more technical are using ChatGPT to write, debug, and optimize code. I, personally, have used it to write <a href="https://peps.python.org/pep-0257/">docstrings</a> for some Python functions I&rsquo;ve written, and most of it has been good!</p>
-<p>But what about Infrastructure as Code (IaC)? Can it work with Terraform? Actually, yes, it can.</p>
-<p>One of the potential pain points I&rsquo;ve seen in the past is converting Terraform code that had been written for AWS to work in Azure or GCP. Terraform is &ldquo;agnostic&rdquo; in that it works with all of those services, but the code is not portable &ndash; you can&rsquo;t just switch providers and it will &ldquo;just work.&rdquo; You have to understand the provider differences and, in the case of virtual instances, what an equivalent instance type name would be in another provider.</p>
-<p>ChatGPT to the rescue (mostly).</p>
-<p>As a basic example, I threw the following code to ChatGPT with the following instructions: <em>&ldquo;Convert the following Terraform code to work in Azure:&rdquo;</em>:</p>
-<pre tabindex="0"><code>data &#34;aws_ami&#34; &#34;my_base&#34; {
-  most_recent = true
-  owners      = [&#34;self&#34;]
-
-  filter {
-    name   = &#34;name&#34;
-    values = [&#34;my-base-*&#34;]
-  }
+				<h1 class="entry__title">8th Piece: Preventing uBlock Origin from blocking sentry.io with CloudFront</h1>
+				<div class="entry__content"><p>In my development of <a href="https://stackref.com">StackRef</a>, I&rsquo;m interested in tracing down React UI errors as they happen to the user. <a href="https://sentry.io">Sentry.io</a> has been a great tool for this, and their free version gets me what I need, at least for the moment.</p>
+<p>Recently I had a user test the site out, where they ran into an error that did not show up in Sentry. Why? Because the <a href="https://ublockorigin.com">uBlock Origin</a> plugin is set by default to block that traffic. Once they disabled the plugin, I could see the error, track it down, and fix it. But if this is going to happen to the many people using the plugin, I can&rsquo;t ask them all to disable it for me!</p>
+<p>Thankfully, Sentry has <a href="https://docs.sentry.io/platforms/javascript/troubleshooting/#dealing-with-ad-blockers">a tunnel option</a> available for this exact case. They even have some handly <a href="https://github.com/getsentry/examples/tree/master/tunneling">examples</a> for how to implement it. If you&rsquo;re using CloudFront, you <em>could</em> direct traffic to a python Lambda function, but there&rsquo;s a much, much simpler way: <a href="https://docs.aws.amazon.com/AmazonCloudFront/latest/DeveloperGuide/cloudfront-functions.html">CloudFront Functions</a>.</p>
+<p>I&rsquo;ll use React and Terraform for an example of how to set this up.</p>
+<p>I&rsquo;m going to assume that your React app is hosted on CloudFront: app.mydomain.com. You might have something like this setup in React:</p>
+<pre tabindex="0"><code>Sentry.init({
+  dsn: &#34;https://examplePublicKey@o0.ingest.sentry.io/0&#34;,
+  ...other settings...
+});
+</code></pre><p>uBlock Origin will block that call out to <code>ingest.sentry.io</code>. So let&rsquo;s go ahead and follow Sentry&rsquo;s directions, add a <code>tunnel</code> option and local path:</p>
+<pre tabindex="0"><code>Sentry.init({
+  dsn: &#34;https://examplePublicKey@o0.ingest.sentry.io/0&#34;,
+  tunnel: &#34;/sentry&#34;,
+  ...other settings...
+});
+</code></pre><p><code>/sentry</code> can be any path you want, so long as you dedicate it to calls to Sentry as a behavior on CloudFront. Do not change the <code>dsn</code> value here to your CloudFront hostname! Keep it as the hostname Sentry provided you.</p>
+<p>In Terraform, let&rsquo;s add a few data objects we&rsquo;ll use later:</p>
+<pre tabindex="0"><code>data &#34;aws_cloudfront_cache_policy&#34; &#34;CachingDisabled&#34; {
+  name = &#34;Managed-CachingDisabled&#34;
 }
 
-resource &#34;aws_instance&#34; &#34;my_instance&#34; {
-  ami                  = data.aws_ami.my_base.id
-  iam_instance_profile = aws_iam_instance_profile.my_instance.name
-  instance_type        = &#34;t2.micro&#34;
-  key_name             = var.ec2_key_name
-  monitoring           = false
-  subnet_id            = data.terraform_remote_state.vpc.outputs.public_subnet_a
-
-  vpc_security_group_ids = [
-    aws_security_group.instances.id
-  ]
-
-  root_block_device {
-    volume_type = &#34;gp3&#34;
-    volume_size = &#34;8&#34;
-  }
-
-  provisioner &#34;local-exec&#34; {
-    command = &#34;sleep 180;ANSIBLE_HOST_KEY_CHECKING=False ansible-playbook -u ec2-user --private-key ${var.private_key_file} -i &#39;${self.public_ip},&#39; ${path.cwd}/ansible/my_instance.yml&#34;
-  }
-
+data &#34;aws_cloudfront_response_headers_policy&#34; &#34;CORS-with-preflight-and-SecurityHeadersPolicy&#34; {
+  name = &#34;Managed-CORS-with-preflight-and-SecurityHeadersPolicy&#34;
 }
-</code></pre><p>Here&rsquo;s ChatGPT&rsquo;s response, which came seconds later:</p>
-<pre tabindex="0"><code>Here is the AWS Terraform code rewritten for Azure:
-
-data &#34;azurerm_image&#34; &#34;my_base&#34; {
-  most_recent = true
-  publishers = [&#34;self&#34;]
-
-  filter {
-    name = &#34;name&#34;
-    values = [&#34;my-base-*&#34;]
+</code></pre><p>&hellip; and a custom origin request policy for Sentry &ndash; we don&rsquo;t want to send everything to them:</p>
+<pre tabindex="0"><code>resource &#34;aws_cloudfront_origin_request_policy&#34; &#34;sentry&#34; {
+  name    = &#34;sentry&#34;
+  comment = &#34;Sentry&#34;
+  cookies_config {
+    cookie_behavior = &#34;none&#34;
   }
-}
-
-resource &#34;azurerm_virtual_machine&#34; &#34;my_instance&#34; {
-  image_reference = data.azurerm_image.my_base.id
-  vm_size = &#34;Standard_B1s&#34;
-  key_name = var.ec2_key_name
-  monitoring = false
-  subnet_id = data.terraform_remote_state.vpc.outputs.public_subnet_a
-
-  vpc_security_group_ids = [
-    azurerm_security_group.instances.id
-  ]
-
-root_block_device {
-  disk_size_gb = &#34;8&#34;
-  }
-
-  provisioner &#34;local-exec&#34; {
-    command = &#34;sleep 180;ANSIBLE_HOST_KEY_CHECKING=False ansible-playbook -u ec2-user --private-key ${var.private_key_file} -i &#39;${self.public_ip},&#39; ${path.cwd}/ansible/my_instance.yml&#34;
-  }
-
-}
-</code></pre><p>That &hellip; would work! It did not complain that it didn&rsquo;t know about the remote state or the variables, but that would just complicate what I asked it anyway. It also assumed that the user on the new instance was still named <code>ec2-user</code>, but I didn&rsquo;t expect it to understand that, especially since it was nested inside the provisioner block.</p>
-<p>Next I asked <em>&ldquo;Write the same code to work in GCP.&rdquo;</em> Here&rsquo;s that response:</p>
-<pre tabindex="0"><code>Here is the AWS Terraform code rewritten to work in GCP:
-
-data &#34;google_compute_image&#34; &#34;my_base&#34; {
-  most_recent = true
-  owners = [&#34;self&#34;]
-
-  filter {
-    name = &#34;name&#34;
-    values = [&#34;my-base-*&#34;]
-  }
-}
-
-resource &#34;google_compute_instance&#34; &#34;my_instance&#34; {
-  image = data.google_compute_image.my_base.id
-  machine_type = &#34;f1-micro&#34;
-  metadata = {
-    ssh-keys = &#34;${var.user}:${file(var.public_key_file)}&#34;
-  }
-  network_interface {
-    subnetwork = data.terraform_remote_state.vpc.outputs.public_subnet_a
-  }
-  service_account {
-    scopes = [&#34;https://www.googleapis.com/auth/cloud-platform&#34;]
-  }
-  boot_disk {
-    initialize_params {
-      image = data.google_compute_image.my_base.id
+  headers_config {
+    header_behavior = &#34;whitelist&#34;
+    headers {
+      items = [
+        &#34;Origin&#34;,
+        &#34;Access-Control-Request-Method&#34;,
+        &#34;Access-Control-Request-Headers&#34;,
+        &#34;DSN&#34;, # May not be necessary?
+        &#34;Referer&#34;,
+        &#34;X-Sentry-Token&#34;,
+        &#34;X-Sentry-Auth&#34;
+      ]
     }
   }
-
-  provisioner &#34;local-exec&#34; {
-    command = &#34;sleep 180;ANSIBLE_HOST_KEY_CHECKING=False ansible-playbook -u ${var.user} --private-key ${var.private_key_file} -i &#39;${self.network_interface.0.access_config.0.nat_ip},&#39; ${path.cwd}/ansible/my_instance.yml&#34;
+  query_strings_config {
+    query_string_behavior = &#34;all&#34;
   }
 }
-</code></pre><p>Again, that works!</p>
-<p>Since it seems to be pulling in the equivalent instance family/type from each provider, I wondered whether it actually was correct. Does ChatGPT know which instance types match the other providers?</p>
-<p><em>&ldquo;What is the equivalent of an AWS t3.micro in Azure and GCP?&rdquo;</em></p>
-<p><code>In Azure, the equivalent of an AWS t3.micro instance is the Standard_B1s instance type. In GCP, the equivalent of an AWS t3.micro instance is the f1-micro machine type. These instance types and machine types offer similar performance and specs, including vCPU and memory, as the AWS t3.micro instance.</code></p>
-<p>OK, good response! But can it give me a complete list?</p>
-<p><em>&ldquo;List all of the AWS t3 instance types and their equivalent types in Azure and GCP in tabular format.&rdquo;</em></p>
-<p><code>Here is a table listing the AWS t3 instance types and their equivalent types in Azure and GCP:</code></p>
-<table>
-<thead>
-<tr>
-<th>AWS t3 Instance Type</th>
-<th>Azure Equivalent</th>
-<th>GCP Equivalent</th>
-</tr>
-</thead>
-<tbody>
-<tr>
-<td>t3.nano</td>
-<td>Standard_B1s</td>
-<td>f1-micro</td>
-</tr>
-<tr>
-<td>t3.micro</td>
-<td>Standard_B1s</td>
-<td>f1-micro</td>
-</tr>
-<tr>
-<td>t3.small</td>
-<td>Standard_B1s</td>
-<td>f1-micro</td>
-</tr>
-<tr>
-<td>t3.medium</td>
-<td>Standard_B1ms</td>
-<td>n1-standard-1</td>
-</tr>
-<tr>
-<td>t3.large</td>
-<td>Standard_B2s</td>
-<td>n1-standard-2</td>
-</tr>
-<tr>
-<td>t3.xlarge</td>
-<td>Standard_B2ms</td>
-<td>n1-standard-4</td>
-</tr>
-<tr>
-<td>t3.2xlarge</td>
-<td>Standard_B4ms</td>
-<td>n1-standard-8</td>
-</tr>
-</tbody>
-</table>
-<p><code>Note that the Azure and GCP equivalents listed above are only approximate, and there may be some differences in the exact specs and performance of the different instance types and machine types. It is always best to consult the official documentation and compare the specific specs of the instance types and machine types to ensure that you are choosing the best option for your needs.</code></p>
-<p>This is the <em>early days</em> of ChatGPT. Can you imagine if/when they license this technology out to Hashicorp to do this conversion for you? You might be able to get <em>true</em> cloud agnosticity with your IaC, allowing you to quickly move and provision your resources in another provider, without having to spend hours upon hours trying to figure out what it should look like.</p>
-<p>Not perfect, but ChatGPT is just a baby. Give &rsquo;er time.</p>
+</code></pre><p>In your <code>aws_cloudfront_distribution</code> resource, you&rsquo;ll add a new origin:</p>
+<pre tabindex="0"><code>  # Sentry
+  origin {
+    connection_attempts = 3
+    connection_timeout  = 10
+    domain_name         = &#34;o0.ingest.sentry.io&#34;
+    origin_id           = &#34;o0.ingest.sentry.io&#34;
+
+    custom_origin_config {
+      http_port                = 80
+      https_port               = 443
+      origin_keepalive_timeout = 10
+      origin_protocol_policy   = &#34;https-only&#34;
+      origin_read_timeout      = 30
+      origin_ssl_protocols = [
+        &#34;TLSv1.2&#34;,
+      ]
+    }
+  }
+</code></pre><p>Next, add a new <code>ordered_cache_behavior</code> block in the distribution resource:</p>
+<pre tabindex="0"><code> ordered_cache_behavior {
+    allowed_methods = [
+      &#34;DELETE&#34;,
+      &#34;GET&#34;,
+      &#34;HEAD&#34;,
+      &#34;OPTIONS&#34;,
+      &#34;PATCH&#34;,
+      &#34;POST&#34;,
+      &#34;PUT&#34;
+    ]
+    cached_methods = [
+      &#34;GET&#34;,
+      &#34;HEAD&#34;
+    ]
+
+    cache_policy_id            = data.aws_cloudfront_cache_policy.CachingDisabled.id
+    response_headers_policy_id = data.aws_cloudfront_response_headers_policy.CORS-with-preflight-and-SecurityHeadersPolicy.id
+    origin_request_policy_id   = aws_cloudfront_origin_request_policy.sentry.id
+
+    compress               = false
+    path_pattern           = &#34;/sentry&#34;
+    target_origin_id       = &#34;o0.ingest.sentry.io&#34;
+    viewer_protocol_policy = &#34;https-only&#34;
+
+    function_association {
+      event_type   = &#34;viewer-request&#34;
+      function_arn = aws_cloudfront_function.sentry_viewer_request.arn
+    }
+  }
+</code></pre><p>Notice we&rsquo;re using a <code>function_association</code> in that cache behavior &ndash; that&rsquo;s where the magic happens. So, create the function (I&rsquo;ll assume you&rsquo;ll place it in <code>cloudfront_functions/sentry_viewer_request.js</code> in the root/module of your Terraform):</p>
+<pre tabindex="0"><code>function handler(event) {
+  var request = event.request;
+  var projectId = &#39;12345&#39;; // Your own Project ID goes here
+
+  request.uri = `/api/${projectId}/envelope/`;
+
+  return request;
+}
+</code></pre><p>And in Terraform:</p>
+<pre tabindex="0"><code>resource &#34;aws_cloudfront_function&#34; &#34;sentry_viewer_request&#34; {
+  name    = &#34;sentry_viewer_request&#34;
+  runtime = &#34;cloudfront-js-1.0&#34;
+  comment = &#34;Redirect through tunnel to true Sentry endpoint API&#34;
+  publish = true
+  code    = file(&#34;${path.module}/cloudfront_functions/sentry_viewer_request.js&#34;)
+}
+</code></pre><p>Now anytime someone goes to your React site, the <code>tunnel:</code> option tells it to direct traffic to <code>yourapp.com/sentry</code> instead of <code>o0.ingest.sentry.io</code>, which uBlock Origin would have seen and instantly blocked. Blocked no-more!</p>
 </div>
 				
 				<footer class="entry__footer">
@@ -222,22 +178,22 @@ resource &#34;google_compute_instance&#34; &#34;my_instance&#34; {
 	<a class="share__link btn" title="Share on Facebook" href="https://www.facebook.com/sharer/sharer.php?u=https%3a%2f%2frawdatum.com%2fposts%2f8th-piece%2f" target="_blank" rel="noopener noreferrer" onclick="window.open(this.href, 'Share on Facebook', 'width=800,height=600,toolbar=0,status=0'); return false">
 		<svg class="share__icon" aria-label="Facebook" role="img" width="32" height="32" viewBox="0 0 512 512"><path d="M330 512V322h64l9-74h-73v-47c0-22 6-36 37-36h39V99c-7-1-30-3-57-3-57 0-95 34-95 98v54h-64v74h64v190z"/></svg>
 	</a>
-	<a class="share__link btn" title="Share on Twitter" href="https://twitter.com/intent/tweet/?url=https%3a%2f%2frawdatum.com%2fposts%2f8th-piece%2f&amp;text=8th%20Piece%3a%20Using%20ChatGPT%20to%20convert%20Terraform%20for%20AWS%20to%20Azure%20and%20GCP" target="_blank" rel="noopener noreferrer" onclick="window.open(this.href, 'Share on Twitter', 'width=800,height=450,resizable=yes,toolbar=0,status=0'); return false">
+	<a class="share__link btn" title="Share on Twitter" href="https://twitter.com/intent/tweet/?url=https%3a%2f%2frawdatum.com%2fposts%2f8th-piece%2f&amp;text=8th%20Piece%3a%20Preventing%20uBlock%20Origin%20from%20blocking%20sentry.io%20with%20CloudFront" target="_blank" rel="noopener noreferrer" onclick="window.open(this.href, 'Share on Twitter', 'width=800,height=450,resizable=yes,toolbar=0,status=0'); return false">
 		<svg class="share__icon" aria-label="Twitter" role="img" width="32" height="32" viewBox="0 0 512 512"><path d="M437 152a72 72 0 0 1-40 12 72 72 0 0 0 32-40 72 72 0 0 1-45 17 72 72 0 0 0-122 65 200 200 0 0 1-145-74 72 72 0 0 0 22 94 72 72 0 0 1-32-7 72 72 0 0 0 56 69 72 72 0 0 1-32 1 72 72 0 0 0 67 50 200 200 0 0 1-105 29 200 200 0 0 0 309-179 200 200 0 0 0 35-37"/></svg>
 	</a>
-	<a class="share__link btn" title="Share on Reddit" href="https://www.reddit.com/submit?url=https%3a%2f%2frawdatum.com%2fposts%2f8th-piece%2f&amp;title=8th%20Piece%3a%20Using%20ChatGPT%20to%20convert%20Terraform%20for%20AWS%20to%20Azure%20and%20GCP" target="_blank" rel="noopener noreferrer" onclick="window.open(this.href, 'Share on Reddit', 'width=832,height=624,toolbar=0,status=0'); return false">
+	<a class="share__link btn" title="Share on Reddit" href="https://www.reddit.com/submit?url=https%3a%2f%2frawdatum.com%2fposts%2f8th-piece%2f&amp;title=8th%20Piece%3a%20Preventing%20uBlock%20Origin%20from%20blocking%20sentry.io%20with%20CloudFront" target="_blank" rel="noopener noreferrer" onclick="window.open(this.href, 'Share on Reddit', 'width=832,height=624,toolbar=0,status=0'); return false">
 		<svg class="share__icon" aria-label="Reddit" role="img" width="32" height="32" viewBox="0 0 512 512"><path fill-rule="evenodd" d="M375 146a32 32 0 1 0-29-46l-65-13c-5-1-9 2-10 6l-22 97c-45 1-85 15-113 36a42 42 0 1 0-45 69l-1 12c0 65 74 117 166 117s166-52 166-117l-1-11a42 42 0 1 0-44-69c-28-21-67-35-111-37l19-86 58 13a32 32 0 0 0 32 29zM190 353c2-1 4 0 5 1 15 11 38 18 61 18s46-6 61-18a7 7 0 0 1 8 10c-18 14-44 21-69 21-25-1-51-7-69-21a6 6 0 0 1 3-11zm23-44a31 31 0 1 1-44-44 31 31 0 0 1 44 44zm130 0a31 31 0 1 0-44-44 31 31 0 0 0 44 44z"/></svg>
 	</a>
-	<a class="share__link btn" title="Share on Telegram" href="https://t.me/share/url?url=https%3a%2f%2frawdatum.com%2fposts%2f8th-piece%2f&amp;title=8th%20Piece%3a%20Using%20ChatGPT%20to%20convert%20Terraform%20for%20AWS%20to%20Azure%20and%20GCP" target="_blank" rel="noopener noreferrer" onclick="window.open(this.href, 'Share on Telegram', 'width=800,height=600,toolbar=0,status=0'); return false">
+	<a class="share__link btn" title="Share on Telegram" href="https://t.me/share/url?url=https%3a%2f%2frawdatum.com%2fposts%2f8th-piece%2f&amp;title=8th%20Piece%3a%20Preventing%20uBlock%20Origin%20from%20blocking%20sentry.io%20with%20CloudFront" target="_blank" rel="noopener noreferrer" onclick="window.open(this.href, 'Share on Telegram', 'width=800,height=600,toolbar=0,status=0'); return false">
 		<svg class="share__icon" aria-label="Telegram" role="img" width="32" height="32" viewBox="0 0 512 512"><path d="M199 404c-11 0-10-4-13-14l-32-105 245-144"/><path d="M199 404c7 0 11-4 16-8l45-43-56-34"/><path d="M204 319l135 99c14 9 26 4 30-14l55-258c5-22-9-32-24-25L79 245c-21 8-21 21-4 26l83 26 190-121c9-5 17-3 11 4"/></svg>
 	</a>
-	<a class="share__link btn" title="Share on LinkedIn" href="https://www.linkedin.com/shareArticle?mini=true&url=https%3a%2f%2frawdatum.com%2fposts%2f8th-piece%2f&title=8th%20Piece%3a%20Using%20ChatGPT%20to%20convert%20Terraform%20for%20AWS%20to%20Azure%20and%20GCP" target="_blank" rel="noopener noreferrer" onclick="window.open(this.href, 'Share on LinkedIn', 'width=640,height=480,toolbar=0,status=0'); return false">
+	<a class="share__link btn" title="Share on LinkedIn" href="https://www.linkedin.com/shareArticle?mini=true&url=https%3a%2f%2frawdatum.com%2fposts%2f8th-piece%2f&title=8th%20Piece%3a%20Preventing%20uBlock%20Origin%20from%20blocking%20sentry.io%20with%20CloudFront" target="_blank" rel="noopener noreferrer" onclick="window.open(this.href, 'Share on LinkedIn', 'width=640,height=480,toolbar=0,status=0'); return false">
 		<svg class="share__icon" aria-label="LinkedIn" role="img" width="32" height="32" viewBox="0 0 512 512"><circle cx="142" cy="138" r="37"/><path stroke-width="66" d="M244 194v198M142 194v198"/><path d="M276 282c0-20 13-40 36-40 24 0 33 18 33 45v105h66V279c0-61-32-89-76-89-34 0-51 19-59 32"/></svg>
 	</a>
 	<a class="share__link btn" title="Share on VK" href="https://vk.com/share.php?url=https%3a%2f%2frawdatum.com%2fposts%2f8th-piece%2f" target="_blank" rel="noopener noreferrer" onclick="window.open(this.href, 'Share on VK', 'width=640,height=480,toolbar=0,status=0'); return false">
 		<svg class="share__icon" aria-label="VK" role="img" width="32" height="32" viewBox="0 0 512 512"><path d="M274 363c5-1 14-3 14-15 0 0-1-30 13-34s32 29 51 42c14 9 25 8 25 8l51-1s26-2 14-23c-1-2-9-15-39-42-31-30-26-25 11-76 23-31 33-50 30-57-4-7-20-6-20-6h-57c-6 0-9 1-12 6 0 0-9 25-21 45-25 43-35 45-40 42-9-5-7-24-7-37 0-45 7-61-13-65-13-2-59-4-73 3-7 4-11 11-8 12 3 0 12 1 17 7 8 13 9 75-2 81-15 11-53-62-62-86-2-6-5-7-12-9H79c-6 0-15 1-11 13 27 56 83 193 184 192z"/></svg>
 	</a>
-	<a class="share__link btn" title="Save to Pocket" href="https://getpocket.com/edit?url=https%3a%2f%2frawdatum.com%2fposts%2f8th-piece%2f&amp;title=8th%20Piece%3a%20Using%20ChatGPT%20to%20convert%20Terraform%20for%20AWS%20to%20Azure%20and%20GCP" target="_blank" rel="noopener noreferrer" onclick="window.open(this.href, 'Save to Pocket', 'width=480,height=320,toolbar=0,status=0'); return false">
+	<a class="share__link btn" title="Save to Pocket" href="https://getpocket.com/edit?url=https%3a%2f%2frawdatum.com%2fposts%2f8th-piece%2f&amp;title=8th%20Piece%3a%20Preventing%20uBlock%20Origin%20from%20blocking%20sentry.io%20with%20CloudFront" target="_blank" rel="noopener noreferrer" onclick="window.open(this.href, 'Save to Pocket', 'width=480,height=320,toolbar=0,status=0'); return false">
 		<svg class="share__icon" aria-label="Pocket" role="img" width="32" height="32" viewBox="0 0 512 512"><path d="M388.8 88.9H123.2A47.4 47.4 0 0 0 76 136.5v131.9c0 2.4.2 4.8.5 7.2a101.8 101.8 0 0 0-.5 10.6c0 75.6 80.6 137 180 137s180-61.4 180-137c0-3.6-.2-7.1-.5-10.6.3-2.4.5-4.8.5-7.2v-132A47.4 47.4 0 0 0 388.8 89zm-22.4 132.6l-93 93c-4.7 4.6-11 7-17.1 7a23.8 23.8 0 0 1-17.7-7l-93-93a24 24 0 0 1 33.8-33.8l76.6 76.5 76.6-76.5a24 24 0 0 1 33.8 33.8z"/></svg>
 	</a>
 </div>
@@ -269,7 +225,7 @@ resource &#34;google_compute_instance&#34; &#34;my_instance&#34; {
 	</div>
 	<footer class="footer">
 <div class="footer__social social">
-		<a class="social__link" target="_blank" rel="noopener noreferrer" href="mailto:keith@realistek.com">
+		<a class="social__link" target="_blank" rel="noopener noreferrer" href="mailto:gudlyf@realistek.com">
 			<svg class="social__icon" aria-label="Email" role="img" width="32" height="32" viewBox="0 0 512 512"><path d="M299 268l124 106c-4 4-10 7-17 7H106c-7 0-13-3-17-7l124-106 43 38 43-38zm-43 13L89 138c4-4 10-7 17-7h300c7 0 13 3 17 7L256 281zm54-23l121-105v208L310 258zM81 153l121 105L81 361V153z"/></svg>
 		</a>
 		<a class="social__link" target="_blank" rel="noopener noreferrer" href="https://twitter.com/Gudlyf">
@@ -284,11 +240,14 @@ resource &#34;google_compute_instance&#34; &#34;my_instance&#34; {
 		<a class="social__link" target="_blank" rel="noopener noreferrer" href="https://gitlab.com/kmcduffee-stackref">
 			<svg class="social__icon" aria-label="Gitlab" role="img" width="32" height="32" viewBox="0 0 512 512"><path d="M450 282l-22-67-43-133c-2-7-12-7-14 0l-43.3 133H184.3L141 82c-2-7-12-7-14 0L84 215l-22 67c-2 6 0 13 6 16l188 137 188-137c6-3 8-10 6-16z"/></svg>
 		</a>
+		<a class="social__link" target="_blank" rel="noopener noreferrer" href="https://mastodon.online/@Gudlyf">
+			<svg class="social__icon" aria-label="Mastodon" role="img" width="32" height="32" viewBox="0 0 512 512"><path d="M416 197c0-74-49-96-49-96-42-22-172-24-222 0 0 0-49 22-49 96v59c2 72 14 145 81 162 33 9 89 18 140-6l-2-27s-27 7-58 7c-74 2-67-39-70-52 0 0 51 17 137 6 42-6 80-32 85-56 8-38 7-93 7-93zm-58 96h-35v-88c0-18-8-27-23-27-18 0-27 11-27 33v47h-34v-47c0-22-9-33-27-33-15 0-23 9-23 27v88h-35v-91c0-18 5-60 52-60 39 0 50 37 50 37s10-37 50-37c45 0 52 42 52 60v91z"/></svg>
+		</a>
 		<a class="social__link" target="_blank" rel="noopener noreferrer" href="https://medium.com/@gudlyf">
 			<svg class="social__icon" aria-label="Medium" role="img" width="32" height="32" viewBox="0 0 512 512"><path d="M125 173c0-4-2-9-5-11l-31-38v-6h98l75 166 67-166h93v6l-27 26c-2 1-3 4-3 7v190c0 3 1 6 3 8l27 25v6H289v-6l27-26c3-3 3-4 3-8V193l-76 192h-10l-88-192v129c-1 5 1 11 5 15l35 43v5H85v-5l35-43c4-4 6-10 5-15z"/></svg>
 		</a>
 </div>
-	<div class="footer__copyright">© 2022 Keith McDuffee. <span class="footer__copyright-credits">Powered by <a href="https://gohugo.io/" rel="nofollow noopener" target="_blank">Hugo</a> and <a href="https://github.com/vimux/binario" rel="nofollow noopener" target="_blank">Binario</a> theme.</span></div>
+	<div class="footer__copyright">© 2023 Keith McDuffee. <span class="footer__copyright-credits">Powered by <a href="https://gohugo.io/" rel="nofollow noopener" target="_blank">Hugo</a> and <a href="https://github.com/vimux/binario" rel="nofollow noopener" target="_blank">Binario</a> theme.</span></div>
 </footer>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.6/MathJax.js?config=TeX-AMS-MML_HTMLorMML" async></script>
 

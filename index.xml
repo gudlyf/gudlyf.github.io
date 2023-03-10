@@ -6,7 +6,17 @@
     <description>Recent content on Raw Datum</description>
     <generator>Hugo -- gohugo.io</generator>
     <language>en-us</language>
-    <lastBuildDate>Thu, 08 Dec 2022 15:06:26 -0500</lastBuildDate><atom:link href="https://rawdatum.com/index.xml" rel="self" type="application/rss+xml" />
+    <lastBuildDate>Thu, 09 Mar 2023 18:39:11 -0500</lastBuildDate><atom:link href="https://rawdatum.com/index.xml" rel="self" type="application/rss+xml" />
+    <item>
+      <title>8th Piece: Preventing uBlock Origin from blocking sentry.io with CloudFront</title>
+      <link>https://rawdatum.com/posts/8th-piece/</link>
+      <pubDate>Thu, 09 Mar 2023 18:39:11 -0500</pubDate>
+      
+      <guid>https://rawdatum.com/posts/8th-piece/</guid>
+      <description>In my development of StackRef, I&amp;rsquo;m interested in tracing down React UI errors as they happen to the user. Sentry.io has been a great tool for this, and their free version gets me what I need, at least for the moment.
+Recently I had a user test the site out, where they ran into an error that did not show up in Sentry. Why? Because the uBlock Origin plugin is set by default to block that traffic.</description>
+    </item>
+    
     <item>
       <title>7th Piece: Using ChatGPT to convert Terraform for AWS to Azure and GCP</title>
       <link>https://rawdatum.com/posts/7th-piece/</link>
